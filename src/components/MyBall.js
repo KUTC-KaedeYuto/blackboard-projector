@@ -2,31 +2,27 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useState} from "react";
 
 const G = -9.80;
-const speed = 1 / 10;
+// const speed = 1 / 10;
 const e = 0.8;
 
-export default function({pos, velocity, radius, color}){
+export default function MyBall({pos, velocity, radius, color}){
     const vy = useRef(); 
     const [update, setUpdate] = useState(true);
     vy.current = velocity.y;
 
     const ref = useRef();
     useFrame((state, delta) => {
-        if(update) {
-            vy.current += G * delta;
-            let self = ref.current;
-            self.position.x += velocity.x * delta;
-            self.position.y += vy.current * delta;
-            self.position.z += velocity.z * delta;
-            if(self.position.y < radius) {
-                console.log(vy.current);
+        if(!(update && delta < 0.1)) return;
+        vy.current += G * delta;
+        let self = ref.current;
+        self.position.x += velocity.x * delta;
+        self.position.y += vy.current * delta;
+        self.position.z += velocity.z * delta;
+        if(self.position.y < radius) {
             vy.current = -vy.current * e;
-                console.log(vy.current);
-                self.position.y = radius;
-                if(vy.current < radius * 0.05) setUpdate(false);
-            }
+            self.position.y = radius;
+            if(vy.current < radius) setUpdate(false);
         }
-        
     });
     return (
         <mesh position={[pos.x, pos.y, pos.z]} castShadow ref={ref}>

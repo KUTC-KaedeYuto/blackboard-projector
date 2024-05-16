@@ -2,14 +2,21 @@ import './App.css';
 import { Color } from 'three';
 import MyBall from './components/MyBall';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { useRef } from 'react';
+import { Html, OrbitControls } from '@react-three/drei';
+import { useRef, useState } from 'react';
+import { Controllers, Hands, Interactive, VRButton, XR} from '@react-three/xr';
 
 
 function App() {
   const light_ref = useRef();
+  const [log, setLog] = useState([]);
+  const [vrSupported, setVrSupported] = useState(false);
+
   return (
     <div className="App" style={{height: "100%"}}>
+      <VRButton id='vr_button'  hidden={!vrSupported}>
+      {(status) => {setVrSupported(status !== "unsupported")}}
+      </VRButton>
       <Canvas
         shadows
         gl={{
@@ -20,8 +27,13 @@ function App() {
         onCreated={({scene}) => {
           scene.background = new Color('#fff');
         }}
-        
+        onClick={() => {
+          setLog(...log, "canvas clicked");
+        }}
       >
+      <XR>
+        <Controllers />
+        <Hands />
         <fog attach="fog" args={["#fff", 200, 300]} />
         <raycaster></raycaster>
         <OrbitControls/>
@@ -50,19 +62,41 @@ function App() {
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
+        <Html >
+          <h2>ログ</h2>
+          {
+            Array(log).map((l) => l + "\n")
+          }
+        </Html>
+        <Interactive
+           onHover={(e) => {setLog(...log, e);}}
+           onBlur={(e) => {setLog(...log, e);}}
+           onSelectStart={(e) => {setLog(...log, e);}}
+           onSelectEnd={(e) => {setLog(...log, e);}}
+           onSelectMissed={(e) => {setLog(...log, e);}}
+           onSelect={(e) => {setLog(...log, e);}}
+           onSqueezeStart={(e) => {setLog(...log, e);}}
+           onSqueezeEnd={(e) => {setLog(...log, e);}}
+           onSqueezeMissed={(e) => {setLog(...log, e);}}
+           onSqueeze={(e) => {setLog(...log, e);}}
+           onMove={(e) => {setLog(...log, e);}}
+           
+        >
         <MyBall pos={{x:0, y: 0.2, z: 0}} velocity={{x: 0, y: 9.8, z: 0}} radius={0.2} color="#f00"/>
         {/* <MyBall pos={{x: 5, y: 10, z: 0}} velocity={{x: 0, y: 0, z: 0}} radius={1} color="#f00"/> */}
         
-        {/* {
+        {
           new Array(20).fill(0).map((a, i) => {
             return <MyBall key={`${i}@Myball`} 
               pos={{x: 5 * (i - 9), y: 20, z: -30}} 
-              velocity={{x: 0, y: i / 20, z: 0}}
+              velocity={{x: 0, y: i, z: 0}}
               radius={0.5} 
           color={new Color(`hsl(${18 * i}, 80%, 40%)`)}
              />
           })
-        } */}
+        }
+        </Interactive>
+      </XR>
       </Canvas>
     </div>
   );

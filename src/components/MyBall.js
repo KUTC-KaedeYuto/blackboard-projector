@@ -1,11 +1,11 @@
 import { useFrame } from "@react-three/fiber";
-import { useRef, useState} from "react";
+import { useRef, useState } from "react";
 
 const G = -9.80;
 const speed = 1 / 10;
 const e = 0.8;
 
-export default function({pos, velocity, radius, color}){
+export default function MyBall({pos, velocity, radius, color}){
     const vy = useRef(); 
     const [update, setUpdate] = useState(true);
     vy.current = velocity.y;

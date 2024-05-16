@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-private-property-in-object": "^7.24.5",
     "@react-three/drei": "^9.105.6",
     "@react-three/fiber": "^8.16.6",
     "@testing-library/jest-dom": "^5.17.0",
@@ -14,6 +16,7 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "sass": "^1.77.1",
     "three": "^0.164.1",
     "web-vitals": "^2.1.4"
   },

@@ -1,10 +1,9 @@
-import './App.css';
+import './App.scss';
 import { Color } from 'three';
 import MyBall from './components/MyBall';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { useRef } from 'react';
-
 
 function App() {
   const light_ref = useRef();
@@ -20,7 +19,6 @@ function App() {
         onCreated={({scene}) => {
           scene.background = new Color('#fff');
         }}
-        
       >
         <fog attach="fog" args={["#fff", 200, 300]} />
         <raycaster></raycaster>

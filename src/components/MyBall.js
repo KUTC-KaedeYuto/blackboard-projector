@@ -20,10 +20,10 @@ export default function({pos, velocity, radius, color}){
             self.position.z += velocity.z * delta;
             if(self.position.y < radius) {
                 console.log(vy.current);
-            vy.current = -vy.current * e - 0.01;
+            vy.current = -vy.current * e;
                 console.log(vy.current);
                 self.position.y = radius;
-                if(vy.current < radius * 0.01) setUpdate(false);
+                if(vy.current < radius * 0.05) setUpdate(false);
             }
         }
         

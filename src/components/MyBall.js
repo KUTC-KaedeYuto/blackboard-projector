@@ -6,18 +6,25 @@ const speed = 1 / 10;
 const e = 0.8;
 
 export default function({pos, velocity, radius, color}){
-    const [vy , setVy] = useState(velocity.y);
+    const vy = useRef(); 
+    const [update, setUpdate] = useState(true);
+    vy.current = velocity.y;
 
     const ref = useRef();
     useFrame((state, delta) => {
-        setVy(vy + G * delta);
-        let self = ref.current;
-        self.position.x += velocity.x * delta;
-        self.position.y += vy * delta;
-        self.position.z += velocity.z * delta;
-        if(self.position.y < radius) {
-            setVy(-vy * e - 0.01);
-            self.position.y = radius;
+        if(update) {
+            vy.current += G * delta;
+            let self = ref.current;
+            self.position.x += velocity.x * delta;
+            self.position.y += vy.current * delta;
+            self.position.z += velocity.z * delta;
+            if(self.position.y < radius) {
+                console.log(vy.current);
+            vy.current = -vy.current * e - 0.01;
+                console.log(vy.current);
+                self.position.y = radius;
+                if(vy.current < radius * 0.01) setUpdate(false);
+            }
         }
         
     });

@@ -48,7 +48,7 @@ function App() {
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
-        <MyBall pos={{x:0, y: 0.2, z: 0}} velocity={{x: 0, y: 9.8, z: 0}} radius={0.2} color="#f00"/>
+        <MyBall pos={{x:0, y: 1, z: 0}} velocity={{x: 0, y: 9.8, z: 0}} radius={1} color="#f00"/>
         {/* <MyBall pos={{x: 5, y: 10, z: 0}} velocity={{x: 0, y: 0, z: 0}} radius={1} color="#f00"/> */}
         
         {/* {

@@ -12,19 +12,18 @@ export default function MyBall({pos, velocity, radius, color}){
 
     const ref = useRef();
     useFrame((state, delta) => {
-        if(update) {
-            vy.current += G * delta;
-            let self = ref.current;
-            self.position.x += velocity.x * delta;
-            self.position.y += vy.current * delta;
-            self.position.z += velocity.z * delta;
-            if(self.position.y < radius) {
-                console.log(vy.current);
-            vy.current = -vy.current * e;
-                console.log(vy.current);
-                self.position.y = radius;
-                if(vy.current < radius * 0.05) setUpdate(false);
-            }
+        if (!(update && delta < 0.1)) return 
+        vy.current += G * delta;
+        let self = ref.current;
+        self.position.x += velocity.x * delta;
+        self.position.y += vy.current * delta;
+        self.position.z += velocity.z * delta;
+        if(self.position.y < radius) {
+            console.log(vy.current);
+        vy.current = -vy.current * e;
+            console.log(vy.current);
+            self.position.y = radius;
+            if(vy.current < radius * 0.5) setUpdate(false);
         }
         
     });

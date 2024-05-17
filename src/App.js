@@ -2,7 +2,7 @@ import './App.scss';
 import { Color } from 'three';
 import MyBall from './components/MyBall';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { Html, OrbitControls} from '@react-three/drei';
 import { useRef } from 'react';
 
 function App() {
@@ -21,7 +21,6 @@ function App() {
         }}
       >
         <fog attach="fog" args={["#fff", 200, 300]} />
-        <raycaster></raycaster>
         <OrbitControls/>
         <axesHelper args={[5]} />
         <ambientLight color={0xffffff} intensity={1} />
@@ -55,12 +54,23 @@ function App() {
           new Array(20).fill(0).map((a, i) => {
             return <MyBall key={`${i}@Myball`} 
               pos={{x: 5 * (i - 9), y: 20, z: -30}} 
-              velocity={{x: 0, y: i / 20, z: 0}}
+              velocity={{x: 0, y: i, z: 0}}
               radius={0.5} 
           color={new Color(`hsl(${18 * i}, 80%, 40%)`)}
              />
           })
         } */}
+        <Html
+          calculatePosition={() => [0, 0]}
+          style={{
+            width: "300px",
+            textAlign:"left"
+          }}
+        >
+          ここに座標とか書けるよ<br></br>
+          取得方法分からんけど
+          
+        </Html>
       </Canvas>
     </div>
   );

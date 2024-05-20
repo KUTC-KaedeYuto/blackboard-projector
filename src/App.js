@@ -28,7 +28,7 @@ function App() {
           scene.background = new Color('#fff');
         }}
         onClick={() => {
-          setLog(...log, "canvas clicked");
+          setLog([...log, "canvas clicked"]);
         }}
       >
       <XR>
@@ -62,10 +62,10 @@ function App() {
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
-        <Html >
+        <Html style={{backgroundColor: "#fff"}} position={[0,5, -10]} occlude transform>
           <h2>ログ</h2>
           {
-            Array(log).map((l) => l + "\n")
+            Array(log).map((l) => l + "<br>")
           }
         </Html>
         <Interactive

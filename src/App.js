@@ -12,8 +12,8 @@ import { Vector3 } from 'three';
 function App() {
   const light_ref = useRef();
   const [ballInfo, setBallInfo] = useState({
-    position: new Vector3(0, 1, 0),
-    velocity: new Vector3(0, 16, 0)
+    position: new Vector3(0, 100, 0),
+    velocity: new Vector3(5, 0, 0)
   });
 
   const pos_ref = {x: useRef(), y: useRef(), z: useRef()};
@@ -32,7 +32,7 @@ function App() {
           scene.background = new Color('#fff');
         }}
       >
-        <fog attach="fog" args={["#fff", 200, 300]} />
+        <fog attach="fog" args={["#fff", 500, 1000]} />
         <OrbitControls/>
         <axesHelper args={[5]} />
         <ambientLight color={0xffffff} intensity={1} />
@@ -59,7 +59,7 @@ function App() {
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
-        <MyBall pos={ballInfo.position} velocity={ballInfo.velocity} radius={1} color="#f00" onChange={setBallInfo}/>
+        <MyBall pos={ballInfo.position} velocity={ballInfo.velocity} radius={1} color="#f00" onChange={setBallInfo} trail_cooltime={0.2}/>
         {/* <MyBall pos={{x: 5, y: 10, z: 0}} velocity={{x: 0, y: 0, z: 0}} radius={1} color="#f00"/> */}
         
         {/* {

@@ -4,13 +4,20 @@ import MyBall from './components/MyBall';
 import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls, PointerLockControls } from '@react-three/drei';
 import { useRef, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import { Button, Col, Row } from 'react-bootstrap';
+import { Vector3 } from 'three';
+
 
 function App() {
   const light_ref = useRef();
-  const [vy, setVy] = useState(0);
-  
-  const handleVyChange = (newVy) => {setVy(newVy)};
+  const [ballInfo, setBallInfo] = useState({
+    position: new Vector3(0, 1, 0),
+    velocity: new Vector3(0, 16, 0)
+  });
 
+  const pos_ref = {x: useRef(), y: useRef(), z: useRef()};
+  const velocity_ref = {x: useRef(), y: useRef(), z: useRef()};
 
   return (
     <div className="App" style={{height: "100%"}}>
@@ -52,7 +59,7 @@ function App() {
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
-        <MyBall pos={{x:0, y: 5, z: 0}} velocity={{x: 0, y: 9.8, z: 0}} radius={1} color="#f00" onVyChange={handleVyChange}/>
+        <MyBall pos={ballInfo.position} velocity={ballInfo.velocity} radius={1} color="#f00" onChange={setBallInfo}/>
         {/* <MyBall pos={{x: 5, y: 10, z: 0}} velocity={{x: 0, y: 0, z: 0}} radius={1} color="#f00"/> */}
         
         {/* {
@@ -68,14 +75,59 @@ function App() {
         <Html
           calculatePosition={() => [0, 0]}
           style={{
-            width: "300px",
+            width: "50vw",
             textAlign:"left"
           }}
         >
-          ここに座標とか書けるよ<br></br>
-          取得方法分からんけど
-          {vy}
-          <input type="text" />
+          
+          <div>
+            {`座標: [${ballInfo.position.x}, ${ballInfo.position.y}, ${ballInfo.position.z}]`}
+          </div>
+          <div>
+            {`速度: [${ballInfo.velocity.x}, ${ballInfo.velocity.y}, ${ballInfo.velocity.z}]`}
+          </div>
+          
+          <Form.Group className='mb-2' controlId='InitialPositionInput'>
+            <Form.Text>初期位置</Form.Text>
+            <Row>
+              <Col>
+                <Form.Label>x</Form.Label>
+                <Form.Control type='number' ref={pos_ref.x} defaultValue={ballInfo.position.x}></Form.Control>
+              </Col>
+              <Col>
+                <Form.Label>y</Form.Label>
+                <Form.Control type='number' ref={pos_ref.y} defaultValue={ballInfo.position.y}></Form.Control>
+              </Col>
+              <Col>
+                <Form.Label>z</Form.Label>
+                <Form.Control type='number' ref={pos_ref.z} defaultValue={ballInfo.position.z} ></Form.Control>
+              </Col>
+            </Row>            
+          </Form.Group>
+          <Form.Group className='mb-2' controlId='InitialPositionInput'>
+            <Form.Text>初期速度</Form.Text>
+            <Row>
+              <Col>
+                <Form.Label>x</Form.Label>
+                <Form.Control type='number' ref={velocity_ref.x} defaultValue={ballInfo.velocity.x}></Form.Control>
+              </Col>
+              <Col>
+                <Form.Label>y</Form.Label>
+                <Form.Control type='number' ref={velocity_ref.y} defaultValue={ballInfo.velocity.y}></Form.Control>
+              </Col>
+              <Col>
+                <Form.Label>z</Form.Label>
+                <Form.Control type='number' ref={velocity_ref.z} defaultValue={ballInfo.velocity.z} ></Form.Control>
+              </Col>
+            </Row>            
+          </Form.Group>
+          
+          <Button varitant="primary" onClick={() => {
+            setBallInfo({
+              position: new Vector3(+pos_ref.x.current.value, +pos_ref.y.current.value, +pos_ref.z.current.value),
+              velocity: new Vector3(+velocity_ref.x.current.value, +velocity_ref.y.current.value, +velocity_ref.z.current.value)
+            });
+          }}>適用</Button>
         </Html>
       </Canvas>
     </div>

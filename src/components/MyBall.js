@@ -1,4 +1,5 @@
 import { useFrame } from "@react-three/fiber";
+import { Interactive, RayGrab } from "@react-three/xr";
 import { useRef, useState} from "react";
 
 const G = -9.80;
@@ -25,9 +26,13 @@ export default function MyBall({pos, velocity, radius, color}){
         }
     });
     return (
-        <mesh position={[pos.x, pos.y, pos.z]} castShadow ref={ref}>
-            <sphereGeometry args={[radius, 32, 32]} />
-            <meshStandardMaterial color={color} metalness={0.5} roughness={0.0} />
-        </mesh>
+        <Interactive>
+            <RayGrab>
+            <mesh position={[pos.x, pos.y, pos.z]} castShadow ref={ref}>
+                <sphereGeometry args={[radius, 32, 32]} />
+                <meshStandardMaterial color={color} metalness={0.5} roughness={0.0} />
+            </mesh>
+            </RayGrab>
+        </Interactive>
     );
 }

@@ -62,26 +62,14 @@ function App() {
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
-        <Html style={{backgroundColor: "#fff"}} position={[0,5, -10]} occlude transform>
+        <Html
+          transform position={[0, 1, 2]}
+        >
           <h2>ログ</h2>
           {
-            Array(log).map((l) => l + "<br>")
+            Array(log).map((l) => `<p>${l}<p/>`)
           }
         </Html>
-        <Interactive
-           onHover={(e) => {setLog(...log, e);}}
-           onBlur={(e) => {setLog(...log, e);}}
-           onSelectStart={(e) => {setLog(...log, e);}}
-           onSelectEnd={(e) => {setLog(...log, e);}}
-           onSelectMissed={(e) => {setLog(...log, e);}}
-           onSelect={(e) => {setLog(...log, e);}}
-           onSqueezeStart={(e) => {setLog(...log, e);}}
-           onSqueezeEnd={(e) => {setLog(...log, e);}}
-           onSqueezeMissed={(e) => {setLog(...log, e);}}
-           onSqueeze={(e) => {setLog(...log, e);}}
-           onMove={(e) => {setLog(...log, e);}}
-           
-        >
         <MyBall pos={{x:0, y: 0.2, z: 0}} velocity={{x: 0, y: 9.8, z: 0}} radius={0.2} color="#f00"/>
         {/* <MyBall pos={{x: 5, y: 10, z: 0}} velocity={{x: 0, y: 0, z: 0}} radius={1} color="#f00"/> */}
         
@@ -95,7 +83,6 @@ function App() {
              />
           })
         }
-        </Interactive>
       </XR>
       </Canvas>
     </div>

@@ -21,7 +21,6 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
         setUpdate(true);
         setTrails([]);
         setGraphData([]);
-        console.log("called");
     }, [pos]);
 
     useFrame((state, delta) => {
@@ -42,7 +41,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
         if(time.current >= trail_cooltime){
             setTrails([...trails, ref.current.position.clone()]);
             if(renderGraph){
-                if(graphData.length == 0) setGraphData([{
+                if(graphData.length === 0) setGraphData([{
                     t: time.current, 
                     data:{
                         position: self.position.clone(),

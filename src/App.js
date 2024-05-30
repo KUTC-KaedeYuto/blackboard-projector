@@ -2,8 +2,8 @@ import './App.scss';
 import { Color } from 'three';
 import MyBall from './components/MyBall';
 import { Canvas } from '@react-three/fiber';
-import { Html, OrbitControls, PointerLockControls } from '@react-three/drei';
-import { useRef, useState, useContext, createContext, useEffect } from 'react';
+import { Html, OrbitControls } from '@react-three/drei';
+import { useRef, useState, createContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Vector3 } from 'three';
@@ -125,10 +125,10 @@ function App() {
           }}>適用</Button>
         </Html>
         {
-          graphData.length == 0 ? "" : <Graph 
+          graphData.length === 0 ? "" : <><Graph 
           position={{x: 0, y:350}}
-          size={{width: 500, height: 500}}
-          title={"てすと"}
+          size={{width: 250, height: 250}}
+          title="y-tグラフ"
           drawLine
           data={{
             x: graphData.map((d) => d.t),
@@ -143,6 +143,19 @@ function App() {
             }
           }}
         />
+        <Graph position={{x: 0, y:600}} title="v-tグラフ" size={{width: 250, height: 250}} drawLine data={{
+            x: graphData.map((d) => d.t),
+            y: graphData.map((d) => d.data.velocity.y),
+            x_range: {
+              min: 0,
+              max: 30
+            },
+            y_range: {
+              min: -75,
+              max: 75
+            }
+          }} />
+        </>
         }
         
       </Canvas>

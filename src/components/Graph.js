@@ -15,12 +15,12 @@ function InnerGraph({size, title, data, drawLine}){
         if(y_min === undefined) y_min = Math.min(...data.y);
         if(y_max === undefined) y_max = Math.max(...data.y);
 
-        if(x_min == x_max){
+        if(x_min === x_max){
             x_min -= 0.5;
             x_max += 0.5;
         }
 
-        if(y_min == y_max){
+        if(y_min === y_max){
             y_min -= 0.5;
             y_max += 0.5;
         }
@@ -68,6 +68,7 @@ function InnerGraph({size, title, data, drawLine}){
             style={{
                 width: "100%",
                 height: "100%",
+                color: "#fff"
             }}
         >
             {title}

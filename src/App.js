@@ -3,11 +3,13 @@ import { Color } from 'three';
 import MyBall from './components/MyBall';
 import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls, PointerLockControls } from '@react-three/drei';
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext, createContext, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Vector3 } from 'three';
+import Graph from './components/Graph';
 
+export const graphContext = createContext(null);
 
 function App() {
   const light_ref = useRef();
@@ -15,9 +17,12 @@ function App() {
     position: new Vector3(0, 100, 0),
     velocity: new Vector3(5, 0, 0)
   });
+  
 
   const pos_ref = {x: useRef(), y: useRef(), z: useRef()};
   const velocity_ref = {x: useRef(), y: useRef(), z: useRef()};
+
+  const [graphData, setGraphData] = useState([]);
 
   return (
     <div className="App" style={{height: "100%"}}>
@@ -59,19 +64,9 @@ function App() {
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
-        <MyBall pos={ballInfo.position} velocity={ballInfo.velocity} radius={1} color="#f00" onChange={setBallInfo} trail_cooltime={0.2}/>
-        {/* <MyBall pos={{x: 5, y: 10, z: 0}} velocity={{x: 0, y: 0, z: 0}} radius={1} color="#f00"/> */}
-        
-        {/* {
-          new Array(20).fill(0).map((a, i) => {
-            return <MyBall key={`${i}@Myball`} 
-              pos={{x: 5 * (i - 9), y: 20, z: -30}} 
-              velocity={{x: 0, y: i, z: 0}}
-              radius={0.5} 
-          color={new Color(`hsl(${18 * i}, 80%, 40%)`)}
-             />
-          })
-        } */}
+        <graphContext.Provider value={{graphData, setGraphData}}>
+          <MyBall pos={ballInfo.position} velocity={ballInfo.velocity} radius={1} color="#f00" onChange={setBallInfo} trail_cooltime={0.2} renderGraph/>
+        </graphContext.Provider>
         <Html
           calculatePosition={() => [0, 0]}
           style={{
@@ -129,6 +124,27 @@ function App() {
             });
           }}>適用</Button>
         </Html>
+        {
+          graphData.length == 0 ? "" : <Graph 
+          position={{x: 0, y:350}}
+          size={{width: 500, height: 500}}
+          title={"てすと"}
+          drawLine
+          data={{
+            x: graphData.map((d) => d.t),
+            y: graphData.map((d) => d.data.position.y),
+            x_range: {
+              min: 0,
+              max: 30
+            },
+            y_range: {
+              min: 0,
+              max: 150
+            }
+          }}
+        />
+        }
+        
       </Canvas>
     </div>
   );

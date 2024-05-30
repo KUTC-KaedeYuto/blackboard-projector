@@ -1,26 +1,30 @@
 import { useFrame } from "@react-three/fiber";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import TrailObjects from './TrailObjects';
+import { graphContext } from "../App";
 
 const G = -9.80;
 const speed = 1 / 10;
 const e = 0.8;
 
-export default function MyBall({pos, velocity, radius, color, onChange, trail_cooltime}){
+export default function MyBall({pos, velocity, radius, color, onChange, trail_cooltime, renderGraph=false}){
     let vy = useRef(velocity.y); 
     const [update, setUpdate] = useState(true);
     const [trails, setTrails] = useState([]);
+    const {graphData, setGraphData} = useContext(graphContext);
     const ref = useRef();
     const time = useRef(0);
+
+    useEffect(() => {
+        vy.current = velocity.y;
+        setUpdate(true);
+        setTrails([]);
+        setGraphData([]);
+        console.log("called");
+    }, [pos]);
+
     useFrame((state, delta) => {
-        if(velocity.y != undefined){
-            // setUpdate(true);
-            // setTrails([]);
-            console.log(velocity.y);
-            vy.current = velocity.y;
-            velocity.y = undefined;
-        }
         if (!(update && delta < 0.1)) return 
         vy.current += G * delta;
         let self = ref.current;
@@ -37,6 +41,22 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
         }
         if(time.current >= trail_cooltime){
             setTrails([...trails, ref.current.position.clone()]);
+            if(renderGraph){
+                if(graphData.length == 0) setGraphData([{
+                    t: time.current, 
+                    data:{
+                        position: self.position.clone(),
+                        velocity: velocity
+                    }
+                }]);
+                else setGraphData([...graphData, {
+                    t: graphData[graphData.length - 1].t + time.current,
+                    data:{
+                        position: self.position.clone(),
+                        velocity: velocity
+                    }
+                }]);
+            }
             time.current -= trail_cooltime;
         }
         time.current += delta;

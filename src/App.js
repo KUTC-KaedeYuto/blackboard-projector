@@ -143,7 +143,7 @@ function App() {
             }
           }}
         />
-        <Graph position={{x: 0, y:600}} title="v-tグラフ" size={{width: 250, height: 250}} drawLine data={{
+        <Graph position={{x: 0, y:630}} title="v-tグラフ" size={{width: 250, height: 250}} data={{
             x: graphData.map((d) => d.t),
             y: graphData.map((d) => d.data.velocity.y),
             x_range: {

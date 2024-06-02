@@ -34,10 +34,10 @@ function InnerGraph({size, title, data, drawLine}){
         let points = [];
 
         for(let i = 0; i < data.x.length; i++){
-            
+            if(data.x[i] < x_min || x_max < data.x[i] || data.y[i] < y_min || y_max < data.y[i]) continue;
             points.push({
-                x: (data.x[i] - x_min) * 0.95 * width / ((x_max - x_min)) + 0.05 * width,
-                y: 0.95 * height - ((data.y[i] - y_min) * 0.95 * height / (y_max - y_min) + 0.05 * height)
+                x: 0.90 * width * (data.x[i] - x_min) / (x_max - x_min) + 0.05 * width,
+                y: 0.90 * height * (1 - (data.y[i] - y_min) / (y_max - y_min)) + 0.05 * height
             });
         }
         ctx.fillStyle = "#000";
@@ -87,7 +87,7 @@ export default function Graph({position, size, title, data, drawLine=false}){
             calculatePosition={() => [position.x, position.y]}
             style={{
                 width: `${size.width}px`,
-                height: `${size.height}px`,
+                height: `max-content`,
                 textAlign:"center",
                 pointerEvents: "none"
             }}

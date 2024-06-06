@@ -1,13 +1,12 @@
-import './App.scss';
 import { Color } from 'three';
-import MyBall from './components/MyBall';
+import MyBall from '../drei/MyBall';
 import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import { useRef, useState, createContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Vector3 } from 'three';
-import Graph from './components/Graph';
+import Graph from '../drei/Graph';
 
 export const graphContext = createContext(null);
 
@@ -25,7 +24,7 @@ function App() {
   const [graphData, setGraphData] = useState([]);
 
   return (
-    <div className="App" style={{height: "100%"}}>
+    <div className="App text-center" style={{height: "100%"}}>
       <Canvas
         shadows
         gl={{

@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import TrailObjects from './TrailObjects';
-import { graphContext } from "../App";
+import { graphContext } from "../top/App";
 
 const G = -9.80;
 const speed = 1 / 10;

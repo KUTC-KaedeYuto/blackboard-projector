@@ -6,12 +6,50 @@ import { Color } from "three";
 
 export default {
     component: Graph,
-    title: "グラフ描画用コンポーネント"
+    title: "グラフ描画用コンポーネント",
+    argTypes:{
+        title:{
+            description: "グラフ上部に表示されるタイトル"
+        },
+        position:{
+            "position.x":{
+                control: {
+                    type: "range",
+                    min: 10,
+                    max: 1000,
+                    step: 1
+                }
+            }
+        },
+        size:{
+            control:{
+                type:"object"
+            },
+            description: "グラフのサイズを指定可能"
+        },
+        drawLine:{
+            contorl:{
+                type: "boolean"
+            },
+            description: "データ間に直線を引くかどうかを指定可能"
+        },
+        data:{
+            control:{
+                type: "object"
+            },
+            description: "グラフで描画するデータを指定可能"
+        }
+    }
 }
 
-const Template = args => <Canvas onCreated={(scene) => {
+const Template = args => <div style={{background:"#888"}}><Canvas style={{
+    height: "500px"
+}} camera={{
+    position: [0, 0, 0],
+    fov:50
+}} onCreated={(scene) => {
     scene.background = new Color("#fff");
-}}><Graph {...args} ></Graph></Canvas>
+}}><Graph {...args} ></Graph></Canvas></div>
 
 export const graph= Template.bind({});
 graph.args = {

@@ -2,17 +2,17 @@ import { useFrame } from "@react-three/fiber";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import TrailObjects from './TrailObjects';
-import { graphContext } from "../top/App";
+import { Sphere } from "@react-three/drei";
+
 
 const G = -9.80;
-const speed = 1 / 10;
 const e = 0.8;
 
-export default function MyBall({pos, velocity, radius, color, onChange, trail_cooltime, renderGraph=false}){
+export default function MyBall({pos, velocity, radius, color, onChange, show_trail=false, trail_cooltime=0.2, renderGraph=false}){
     let vy = useRef(velocity.y); 
     const [update, setUpdate] = useState(true);
     const [trails, setTrails] = useState([]);
-    const {graphData, setGraphData} = useContext(graphContext);
+    // const {graphData, setGraphData} = useContext(graphContext);
     const ref = useRef();
     const time = useRef(0);
 
@@ -20,7 +20,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
         vy.current = velocity.y;
         setUpdate(true);
         setTrails([]);
-        setGraphData([]);
+        // setGraphData([]);
     }, [pos]);
 
     useFrame((state, delta) => {
@@ -31,6 +31,8 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
         self.position.y += vy.current * delta;
         self.position.z += velocity.z * delta;
         
+        
+
         if(self.position.y < radius) {
             vy.current = -vy.current * e;
             self.position.y = radius;
@@ -38,7 +40,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
             
         
         }
-        if(time.current >= trail_cooltime){
+        if(show_trail && time.current >= trail_cooltime){
             setTrails([...trails, ref.current.position.clone()]);
             if(renderGraph){
                 if(graphData.length === 0) setGraphData([{
@@ -66,10 +68,9 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
     });
     return (
         <>
-        <mesh position={[pos.x, pos.y, pos.z]} castShadow ref={ref}>
-            <sphereGeometry args={[radius, 32, 32]} />
-            <meshStandardMaterial color={color} metalness={0.5} roughness={0.0} />
-        </mesh>
+        <Sphere position={[pos.x, pos.y, pos.z]} castShadow ref={ref} args={[radius, 32, 32]}>
+            <meshPhysicalMaterial color={color} metalness={0.5} roughness={0} />
+        </Sphere>
         <TrailObjects radius={radius} color={color} pos={trails} />
         </>
     );

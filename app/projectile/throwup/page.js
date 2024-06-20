@@ -6,6 +6,7 @@ import { Html } from "@react-three/drei";
 import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Vector3 } from "three";
+import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 
 export default function Page() {
   const y_ref = useRef();
@@ -27,14 +28,11 @@ export default function Page() {
         onChange={setBallInfo}
         active={active} />
       <Html calculatePosition={() => [0, 150]} style={{ width: "200px", height: "300px", background: "#fff" }} zIndexRange={[999, 0]} >
-          {
-            ballInfo.velocity.y
-          }
         <Form>
           <Form.Label>初期位置-Y</Form.Label>
-          <Form.Range min={5} max={100} step={1} defaultValue={10} ref={y_ref} />
+          <LabeledRange min={5} max={100} step={1} defaultValue={10} ref={y_ref} />
           <Form.Label>初期速度-Y</Form.Label>
-          <Form.Range min={5} max={50} step={1} defaultValue={10} ref={vy_ref} />
+          <LabeledRange min={5} max={30} step={1} defaultValue={10} ref={vy_ref} />
         </Form>
         <Button variant="primary" onClick={() => {
           let new_ballInfo = { ...ballInfo };

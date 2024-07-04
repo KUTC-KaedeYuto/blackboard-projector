@@ -2,10 +2,10 @@
 
 import MyBall from "@/components/drei/MyBall";
 import BaseSpace from "@/components/top/BaseSpace";
-import { Html } from "@react-three/drei";
+import { Html, Grid } from "@react-three/drei";
 import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Vector3 } from "three";
+import { Vector3, Color } from "three";
 
 export default function Page(){
     const y_ref = useRef();
@@ -17,9 +17,24 @@ export default function Page(){
     });
     const [init, setInit] = useState(false);
     const [show_trail, setShowTrail] = useState(true);
+    const [showGrid, setShowGrid] = useState(true);
 
     return (
         <BaseSpace>
+            {
+                showGrid && <Grid 
+                    cellSize={2}
+                    cellColor={new Color(0xfffffff)}
+                    cellThickness={1}
+                    rotation={[Math. PI / 2, 0, 0]}
+                    position={[0, 0, 0]}
+                    sectionSize={10}
+                    sectionColor={new Color(0xfffffff)}
+                    sectionThickness={1.5}
+                    fadeDistance={10000}
+                    infiniteGrid
+              />
+            }
             <MyBall 
                 pos={ballInfo.position}
                 velocity={ballInfo.velocity}
@@ -42,6 +57,9 @@ export default function Page(){
                         <Form.Range min={5} max={100} step={1} defaultValue={10} ref={y_ref} />
                     </Form.Group>
                     <Form.Check ref={trail_ref} type="switch" label="軌跡を表示" defaultChecked />
+                    <Form.Check type="switch"  label="XYグリッドを表示" defaultChecked onChange={(e) => {
+                        setShowGrid(e.target.checked);
+                    }}/>
                 </Form>
                 <Button variant="primary" onClick={() => {
                     let new_ballInfo = {...ballInfo};

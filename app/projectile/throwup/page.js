@@ -16,6 +16,8 @@ export default function Page() {
     position: new Vector3(0, 10, 0),
     velocity: new Vector3(0, 10, 0)
   });
+  const [init, setInit] = useState(false);
+
   return (
     <BaseSpace>
       <MyBall
@@ -26,7 +28,8 @@ export default function Page() {
         show_trail
         trail_cooltime={0.2}
         onChange={setBallInfo}
-        active={active} />
+        active={active}
+        init={{init, setInit}} />
       <Html calculatePosition={() => [0, 150]} style={{ width: "200px", height: "300px", background: "#fff" }} zIndexRange={[999, 0]} >
         <Form>
           <Form.Label>初期位置-Y</Form.Label>
@@ -42,6 +45,7 @@ export default function Page() {
           new_ballInfo.position = new Vector3(p.x, +y_ref.current.value, p.z);
           new_ballInfo.velocity = new Vector3(v.x, +vy_ref.current.value, v.z);
           setBallInfo(new_ballInfo);
+          setInit(true);
         }}>適用</Button>
         <Button variant="primary" onClick={(e) => {
           setActive(!active);

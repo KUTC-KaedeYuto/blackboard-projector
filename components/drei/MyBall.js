@@ -8,7 +8,7 @@ import { Sphere } from "@react-three/drei";
 const G = -9.80;
 const e = 0.8;
 
-export default function MyBall({pos, velocity, radius, color, onChange, show_trail=false, trail_cooltime=0.2, renderGraph=false, active=true}){
+export default function MyBall({pos, velocity, radius, color, onChange, show_trail=false, trail_cooltime=0.2, renderGraph=false, active=true, init={init: false, setInit: () => {}}}){
     let vy = useRef(velocity.y);
     // const [update, setUpdate] = useState(active);
     const [trails, setTrails] = useState([]);
@@ -20,9 +20,12 @@ export default function MyBall({pos, velocity, radius, color, onChange, show_tra
          vy.current = velocity.y;
         // setUpdate(active);
         // active = true;
-        setTrails([]);
-        // setGraphData([]);
     }, [pos, velocity]);
+
+    useEffect(() => {
+        setTrails([]);
+        init.setInit(false);
+    }, [init.init]);
 
     useFrame((state, delta) => {
         // if (!(update && delta < 0.1)) return;
@@ -44,7 +47,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, show_tra
         
         }
         if(show_trail && time.current >= trail_cooltime){
-            setTrails([...trails, ref.current.position.clone()]);
+            setTrails((e) => [...e, ref.current.position.clone()]);
             if(renderGraph){
                 if(graphData.length === 0) setGraphData([{
                     t: time.current, 

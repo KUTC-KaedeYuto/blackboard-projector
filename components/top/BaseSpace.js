@@ -25,7 +25,7 @@ function BaseSpace({children}) {
         }}
       >
         <fog attach="fog" args={["#000", 500, 1000]} />
-        <OrbitControls/>
+        {/* <OrbitControls/> */}
         <axesHelper args={[5]} />
         <ambientLight color={0xffffff} intensity={1} />
         <directionalLight

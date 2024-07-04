@@ -5,18 +5,20 @@ import BaseSpace from "@/components/top/BaseSpace";
 import { Html } from "@react-three/drei";
 import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Vector3 } from "three";
+import { Camera, Vector3 } from "three";
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 
 export default function Page() {
   const y_ref = useRef();
   const vy_ref = useRef();
+  const trail_ref = useRef();
   const [active, setActive] = useState(false);
   const [ballInfo, setBallInfo] = useState({
     position: new Vector3(0, 10, 0),
     velocity: new Vector3(0, 10, 0)
   });
   const [init, setInit] = useState(false);
+  const [show_trail, setShowTrail] = useState(true);
 
   return (
     <BaseSpace>
@@ -25,17 +27,18 @@ export default function Page() {
         velocity={ballInfo.velocity}
         radius={1}
         color="#f00"
-        show_trail
+        show_trail={show_trail}
         trail_cooltime={0.2}
         onChange={setBallInfo}
         active={active}
         init={{init, setInit}} />
-      <Html calculatePosition={() => [0, 150]} style={{ width: "200px", height: "300px", background: "#fff" }} zIndexRange={[999, 0]} >
+      <Html calculatePosition={() => [0, 150]} style={{ width: "200px", background: "#fff" }} zIndexRange={[999, 0]} className="p-2" >
         <Form>
           <Form.Label>初期位置-Y</Form.Label>
           <LabeledRange min={5} max={100} step={1} defaultValue={10} ref={y_ref} />
           <Form.Label>初期速度-Y</Form.Label>
           <LabeledRange min={5} max={30} step={1} defaultValue={10} ref={vy_ref} />
+          <Form.Check ref={trail_ref} type="switch" label="軌跡を表示" defaultChecked />
         </Form>
         <Button variant="primary" onClick={() => {
           let new_ballInfo = { ...ballInfo };
@@ -45,6 +48,7 @@ export default function Page() {
           new_ballInfo.position = new Vector3(p.x, +y_ref.current.value, p.z);
           new_ballInfo.velocity = new Vector3(v.x, +vy_ref.current.value, v.z);
           setBallInfo(new_ballInfo);
+          setShowTrail(trail_ref.current.checked);
           setInit(true);
         }}>適用</Button>
         <Button variant="primary" onClick={(e) => {

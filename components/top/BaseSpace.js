@@ -1,10 +1,18 @@
-import { Color } from 'three';
-import { Canvas } from '@react-three/fiber';
+import { Color, Vector3 } from 'three';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { ContextShowMenu } from '@/app/layout';
 import { Plane } from '@react-three/drei';
+
+export function CameraSetter({camera_pos = new Vector3(0, 10, 40), camera_lookAt= new Vector3(0, 10, 0)}){
+  const {camera} = useThree();
+  return useFrame(() => {
+    camera.position.set(camera_pos.x, camera_pos.y, camera_pos.z);
+    camera.lookAt(camera_lookAt.x, camera_lookAt.y, camera_lookAt.z);
+  });
+}
 
 
 function BaseSpace({children}) {
@@ -25,7 +33,7 @@ function BaseSpace({children}) {
         }}
       >
         <fog attach="fog" args={["#000", 500, 1000]} />
-        {/* <OrbitControls/> */}
+        <OrbitControls/>
         <axesHelper args={[5]} />
         <ambientLight color={0xffffff} intensity={1} />
         <directionalLight

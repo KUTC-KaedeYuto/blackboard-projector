@@ -24,6 +24,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, show_tra
 
     useEffect(() => {
         setTrails([]);
+        time.current = 0;
         init.setInit(false);
     }, [init.init]);
 
@@ -47,7 +48,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, show_tra
         
         }
         if(show_trail && time.current >= trail_cooltime){
-            setTrails((e) => [...e, ref.current.position.clone()]);
+            setTrails([...trails, ref.current.position.clone()]);
             if(renderGraph){
                 if(graphData.length === 0) setGraphData([{
                     t: time.current, 

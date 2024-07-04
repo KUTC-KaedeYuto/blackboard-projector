@@ -1,7 +1,7 @@
 "use client"
 
 import MyBall from "@/components/drei/MyBall";
-import BaseSpace from "@/components/top/BaseSpace";
+import BaseSpace, { CameraSetter } from "@/components/top/BaseSpace";
 import { Html } from "@react-three/drei";
 import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
@@ -11,29 +11,36 @@ import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 export default function Page(){
     const y_ref = useRef();
     const vx_ref = useRef();
+    const trail_ref = useRef();
     const [active, setActive] = useState(false);
     const [ballInfo, setBallInfo] = useState({
         position: new Vector3(0, 10, 0),
         velocity: new Vector3(15, 0, 0)
     });
     const [init, setInit] = useState(false);
+    const [show_trail, setShowTrail] = useState(true);
 
     return (
         <BaseSpace>
+            <CameraSetter 
+                camera_pos={new Vector3(10, 10, 40)}
+                camera_lookAt={new Vector3(10, 10, 0)} 
+            />
             <MyBall 
                 pos={ballInfo.position}
                 velocity={ballInfo.velocity}
                 radius={1}
                 color="#f00"
-                show_trail
+                show_trail={show_trail}
                 trail_cooltime={0.2}
                 onChange={setBallInfo}
                 active={active}
                 init={{init, setInit}} />
             <Html
                 calculatePosition={() => [0, 150]}
-                style={{width: "200px", height: "300px", background: "#fff"}}
+                style={{width: "200px", background: "#fff"}}
                 zIndexRange={[999, 0]}
+                className="p-2"
             >
                 <Form>
                     <Form.Group>
@@ -44,6 +51,7 @@ export default function Page(){
                         <Form.Label>初期速度-X</Form.Label>
                         <LabeledRange min={5} max={20} step={1} defaultValue={10} ref={vx_ref} />
                     </Form.Group>
+                    <Form.Check ref={trail_ref} type="switch" label="軌跡を表示" defaultChecked />
                 </Form>
                 <Button variant="primary" onClick={() => {
                     const new_pos = new Vector3(0, 0, 0);
@@ -54,6 +62,7 @@ export default function Page(){
                         position: new_pos,
                         velocity: new_vel
                     });
+                    setShowTrail(trail_ref.current.checked);
                     setInit(true);
                 }}>適用</Button>
                 <Button variant="primary" onClick={(e) => {

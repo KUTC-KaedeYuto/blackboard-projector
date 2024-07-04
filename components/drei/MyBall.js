@@ -2,44 +2,52 @@ import { useFrame } from "@react-three/fiber";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import TrailObjects from './TrailObjects';
-import { graphContext } from "../App";
+import { Sphere } from "@react-three/drei";
+
 
 const G = -9.80;
-const speed = 1 / 10;
 const e = 0.8;
 
-export default function MyBall({pos, velocity, radius, color, onChange, trail_cooltime, renderGraph=false}){
-    let vy = useRef(velocity.y); 
-    const [update, setUpdate] = useState(true);
+export default function MyBall({pos, velocity, radius, color, onChange, show_trail=false, trail_cooltime=0.2, renderGraph=false, active=true, init={init: false, setInit: () => {}}}){
+    let vy = useRef(velocity.y);
+    // const [update, setUpdate] = useState(active);
     const [trails, setTrails] = useState([]);
-    const {graphData, setGraphData} = useContext(graphContext);
+    // const {graphData, setGraphData} = useContext(graphContext);
     const ref = useRef();
     const time = useRef(0);
 
     useEffect(() => {
-        vy.current = velocity.y;
-        setUpdate(true);
+         vy.current = velocity.y;
+        // setUpdate(active);
+        // active = true;
+    }, [pos, velocity]);
+
+    useEffect(() => {
         setTrails([]);
-        setGraphData([]);
-    }, [pos]);
+        init.setInit(false);
+    }, [init.init]);
 
     useFrame((state, delta) => {
-        if (!(update && delta < 0.1)) return 
+        // if (!(update && delta < 0.1)) return;
+        if (!(active && delta < 0.1)) return;
+        
         vy.current += G * delta;
         let self = ref.current;
         self.position.x += velocity.x * delta;
         self.position.y += vy.current * delta;
         self.position.z += velocity.z * delta;
         
+        
+
         if(self.position.y < radius) {
             vy.current = -vy.current * e;
             self.position.y = radius;
-            if(vy.current < radius * 0.5) setUpdate(false);
+            // if(vy.current < radius * 0.5) setUpdate(false);
             
         
         }
-        if(time.current >= trail_cooltime){
-            setTrails([...trails, ref.current.position.clone()]);
+        if(show_trail && time.current >= trail_cooltime){
+            setTrails((e) => [...e, ref.current.position.clone()]);
             if(renderGraph){
                 if(graphData.length === 0) setGraphData([{
                     t: time.current, 
@@ -66,10 +74,9 @@ export default function MyBall({pos, velocity, radius, color, onChange, trail_co
     });
     return (
         <>
-        <mesh position={[pos.x, pos.y, pos.z]} castShadow ref={ref}>
-            <sphereGeometry args={[radius, 32, 32]} />
-            <meshStandardMaterial color={color} metalness={0.5} roughness={0.0} />
-        </mesh>
+        <Sphere position={[pos.x, pos.y, pos.z]} castShadow ref={ref} args={[radius, 32, 32]}>
+            <meshPhysicalMaterial color={color} metalness={0.5} roughness={0} />
+        </Sphere>
         <TrailObjects radius={radius} color={color} pos={trails} />
         </>
     );

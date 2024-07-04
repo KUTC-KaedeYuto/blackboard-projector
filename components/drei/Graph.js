@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 function InnerGraph({size, title, data, drawLine}){
     const canvas_ref = useRef();
-    useEffect(() => {
+    useEffect(() => {// Called when [data or drawLine] changed
         if(data.x_range === undefined) data.x_range = {}
         if(data.y_range === undefined) data.y_range = {}
         
@@ -60,7 +60,7 @@ function InnerGraph({size, title, data, drawLine}){
             }
         }
 
-    }, [data]);
+    }, [data, drawLine]);
 
     
     return (

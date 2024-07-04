@@ -1,13 +1,13 @@
-import './App.scss';
 import { Color } from 'three';
-import MyBall from './components/MyBall';
+import MyBall from '../drei/MyBall';
 import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
-import { useRef, useState, createContext } from 'react';
+import { useRef, useState, createContext, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Vector3 } from 'three';
-import Graph from './components/Graph';
+import Graph from '../drei/Graph';
+import { ContextShowMenu } from '@/app/layout';
 
 export const graphContext = createContext(null);
 
@@ -23,9 +23,11 @@ function App() {
   const velocity_ref = {x: useRef(), y: useRef(), z: useRef()};
 
   const [graphData, setGraphData] = useState([]);
+  
+  const {showMenu, setShowMenu} = useContext(ContextShowMenu);
 
   return (
-    <div className="App" style={{height: "100%"}}>
+    <div className="App text-center" style={{height: "100%"}}>
       <Canvas
         shadows
         gl={{
@@ -71,8 +73,9 @@ function App() {
           calculatePosition={() => [0, 0]}
           style={{
             width: "50vw",
-            textAlign:"left"
+            textAlign:"left",
           }}
+          zIndexRange={[999, 0]}
         >
           
           <div>
@@ -123,6 +126,8 @@ function App() {
               velocity: new Vector3(+velocity_ref.x.current.value, +velocity_ref.y.current.value, +velocity_ref.z.current.value)
             });
           }}>適用</Button>
+          <Button variant='outline-secondary' className='ml-2' onClick={() => {setShowMenu(true)}}>メニューを表示</Button>
+          
         </Html>
         {
           graphData.length === 0 ? "" : <><Graph 

@@ -1,10 +1,11 @@
-import { Color, Vector3 } from 'three';
+import { Color, DirectionalLightHelper, Vector3 } from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Html, PerspectiveCamera } from '@react-three/drei';
+import { Helper, Html, PerspectiveCamera } from '@react-three/drei';
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { ContextShowMenu } from '@/app/layout';
 import { Plane } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 
 export function CameraSetter({camera_pos = new Vector3(0, 10, 40), camera_lookAt= new Vector3(0, 10, 0)}){
   const {camera} = useThree();
@@ -33,7 +34,7 @@ function BaseSpace({children}) {
       >
         <fog attach="fog" args={["#000", 500, 1000]} />
         <PerspectiveCamera makeDefault position={[0, 10, 0]}/>
-        {/* <OrbitControls/> */}
+        <OrbitControls/>
         <axesHelper args={[5]} />
         <ambientLight color={0xffffff} intensity={1} />
         <directionalLight
@@ -41,15 +42,17 @@ function BaseSpace({children}) {
           position={[50, 50, -50]} 
           intensity={3}
           castShadow 
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-left={-20}
-          shadow-camera-right={50}
-          shadow-camera-top={20}
-          shadow-camera-bottom={-50}
+          shadow-mapSize-width={4096}
+          shadow-mapSize-height={4096}
+          shadow-camera-left={-100}
+          shadow-camera-right={100}
+          shadow-camera-top={-100}
+          shadow-camera-bottom={100}
           shadow-camera-near={0.5}
           shadow-camera-far={500}
-        />
+        >
+          <Helper type={DirectionalLightHelper} />
+        </directionalLight>
 
         <Plane args={[1000, 1000]} position={[0, 0, 0]} rotation={[-Math.PI / 2.01, 0, 0]} receiveShadow>
           <meshStandardMaterial color="#7fd14b" />

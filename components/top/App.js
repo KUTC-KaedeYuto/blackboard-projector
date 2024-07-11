@@ -17,38 +17,38 @@ function App() {
     position: new Vector3(0, 100, 0),
     velocity: new Vector3(5, 0, 0)
   });
-  
 
-  const pos_ref = {x: useRef(), y: useRef(), z: useRef()};
-  const velocity_ref = {x: useRef(), y: useRef(), z: useRef()};
+
+  const pos_ref = { x: useRef(), y: useRef(), z: useRef() };
+  const velocity_ref = { x: useRef(), y: useRef(), z: useRef() };
 
   const [graphData, setGraphData] = useState([]);
-  
-  const {showMenu, setShowMenu} = useContext(ContextShowMenu);
+
+  const { showMenu, setShowMenu } = useContext(ContextShowMenu);
 
   return (
-    <div className="App text-center" style={{height: "100%"}}>
+    <div className="App text-center" style={{ height: "100%" }}>
       <Canvas
         shadows
         gl={{
-          alpha:true,
-          antialias:true
+          alpha: true,
+          antialias: true
         }}
-        camera={{position: [0,10,40], fov: 50}}
-        onCreated={({scene}) => {
+        camera={{ position: [0, 10, 40], fov: 50 }}
+        onCreated={({ scene }) => {
           scene.background = new Color('#fff');
         }}
       >
         <fog attach="fog" args={["#fff", 500, 1000]} />
-        <OrbitControls/>
+        <OrbitControls />
         <axesHelper args={[5]} />
         <ambientLight color={0xffffff} intensity={1} />
-        <directionalLight 
+        <directionalLight
           ref={light_ref}
           color={0xffffff}
-          position={[50, 50, -50]} 
+          position={[50, 50, -50]}
           intensity={3}
-          castShadow 
+          castShadow
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
           shadow-camera-left={-20}
@@ -57,34 +57,34 @@ function App() {
           shadow-camera-bottom={-50}
           shadow-camera-near={0.5}
           shadow-camera-far={500}
-          
+
         />
 
-        
+
 
         <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
           <planeGeometry args={[1000, 1000]} />
           <meshStandardMaterial color='#7fd14b' />
         </mesh>
-        <graphContext.Provider value={{graphData, setGraphData}}>
-          <MyBall pos={ballInfo.position} velocity={ballInfo.velocity} radius={1} color="#f00" onChange={setBallInfo} trail_cooltime={0.2} renderGraph/>
+        <graphContext.Provider value={{ graphData, setGraphData }}>
+          <MyBall pos={ballInfo.position} velocity={ballInfo.velocity} radius={1} color="#f00" onChange={setBallInfo} trail_cooltime={0.2} renderGraph />
         </graphContext.Provider>
         <Html
           calculatePosition={() => [0, 0]}
           style={{
             width: "50vw",
-            textAlign:"left",
+            textAlign: "left",
           }}
           zIndexRange={[999, 0]}
         >
-          
+
           <div>
             {`座標: [${ballInfo.position.x}, ${ballInfo.position.y}, ${ballInfo.position.z}]`}
           </div>
           <div>
             {`速度: [${ballInfo.velocity.x}, ${ballInfo.velocity.y}, ${ballInfo.velocity.z}]`}
           </div>
-          
+
           <Form.Group className='mb-2' controlId='InitialPositionInput'>
             <Form.Text>初期位置</Form.Text>
             <Row>
@@ -100,7 +100,7 @@ function App() {
                 <Form.Label>z</Form.Label>
                 <Form.Control type='number' ref={pos_ref.z} defaultValue={ballInfo.position.z} ></Form.Control>
               </Col>
-            </Row>            
+            </Row>
           </Form.Group>
           <Form.Group className='mb-2' controlId='InitialPositionInput'>
             <Form.Text>初期速度</Form.Text>
@@ -117,52 +117,52 @@ function App() {
                 <Form.Label>z</Form.Label>
                 <Form.Control type='number' ref={velocity_ref.z} defaultValue={ballInfo.velocity.z} ></Form.Control>
               </Col>
-            </Row>            
+            </Row>
           </Form.Group>
-          
+
           <Button varitant="primary" onClick={() => {
             setBallInfo({
               position: new Vector3(+pos_ref.x.current.value, +pos_ref.y.current.value, +pos_ref.z.current.value),
               velocity: new Vector3(+velocity_ref.x.current.value, +velocity_ref.y.current.value, +velocity_ref.z.current.value)
             });
           }}>適用</Button>
-          <Button variant='outline-secondary' className='ml-2' onClick={() => {setShowMenu(true)}}>メニューを表示</Button>
-          
+          <Button variant='outline-secondary' className='ml-2' onClick={() => { setShowMenu(true) }}>メニューを表示</Button>
+
         </Html>
         {
-          graphData.length === 0 ? "" : <><Graph 
-          position={{x: 0, y:350}}
-          size={{width: 250, height: 250}}
-          title="y-tグラフ"
-          drawLine
-          data={{
-            x: graphData.map((d) => d.t),
-            y: graphData.map((d) => d.data.position.y),
-            x_range: {
-              min: 0,
-              max: 30
-            },
-            y_range: {
-              min: 0,
-              max: 150
-            }
-          }}
-        />
-        <Graph position={{x: 0, y:630}} title="v-tグラフ" size={{width: 250, height: 250}} data={{
-            x: graphData.map((d) => d.t),
-            y: graphData.map((d) => d.data.velocity.y),
-            x_range: {
-              min: 0,
-              max: 30
-            },
-            y_range: {
-              min: -75,
-              max: 75
-            }
-          }} />
-        </>
+          graphData.length === 0 ? "" : <><Graph
+            position={{ x: 0, y: 350 }}
+            size={{ width: 250, height: 250 }}
+            title="y-tグラフ"
+            drawLine
+            data={{
+              x: graphData.map((d) => d.t),
+              y: graphData.map((d) => d.data.position.y),
+              x_range: {
+                min: 0,
+                max: 30
+              },
+              y_range: {
+                min: 0,
+                max: 150
+              }
+            }}
+          />
+            <Graph position={{ x: 0, y: 630 }} title="v-tグラフ" size={{ width: 250, height: 250 }} data={{
+              x: graphData.map((d) => d.t),
+              y: graphData.map((d) => d.data.velocity.y),
+              x_range: {
+                min: 0,
+                max: 30
+              },
+              y_range: {
+                min: -75,
+                max: 75
+              }
+            }} />
+          </>
         }
-        
+
       </Canvas>
     </div>
   );

@@ -2,19 +2,21 @@ import { useFrame } from "@react-three/fiber";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import TrailObjects from './TrailObjects';
-import { Sphere } from "@react-three/drei";
+import { Helper, Sphere, SpotLight } from "@react-three/drei";
+import { SpotLightHelper } from "three";
 
 
 const G = -9.80;
-const e = 0.8;
+const e = 1;
 
-export default function MyBall({pos, velocity, radius, color, onChange, show_trail=false, trail_cooltime=0.2, renderGraph=false, active=true, init={init: false, setInit: () => {}}}){
+export default function MyBall({pos, velocity, radius, color, onChange, show_trail=false, trail_cooltime=0.2, renderGraph=false, updateGraph=() => {}, active=true, init={init: false, setInit: () => {}}}){
     let vy = useRef(velocity.y);
     // const [update, setUpdate] = useState(active);
     const [trails, setTrails] = useState([]);
-    // const {graphData, setGraphData} = useContext(graphContext);
+
     const ref = useRef();
     const time = useRef(0);
+    const trail_time = useRef(0);
 
     useEffect(() => {
          vy.current = velocity.y;
@@ -47,27 +49,16 @@ export default function MyBall({pos, velocity, radius, color, onChange, show_tra
             
         
         }
-        if(show_trail && time.current >= trail_cooltime){
-            setTrails([...trails, ref.current.position.clone()]);
-            if(renderGraph){
-                if(graphData.length === 0) setGraphData([{
-                    t: time.current, 
-                    data:{
-                        position: self.position.clone(),
-                        velocity: velocity
-                    }
-                }]);
-                else setGraphData([...graphData, {
-                    t: graphData[graphData.length - 1].t + time.current,
-                    data:{
-                        position: self.position.clone(),
-                        velocity: velocity
-                    }
-                }]);
-            }
-            time.current -= trail_cooltime;
+        if(trail_time.current >= trail_cooltime){
+            if(show_trail) setTrails([...trails, ref.current.position.clone()]);
+            if(renderGraph) updateGraph(time.current, {
+                position: self.position.clone(),
+                velocity: new Vector3(velocity.x, vy.current, velocity.z)
+            });
+            trail_time.current -= trail_cooltime;
         }
         time.current += delta;
+        trail_time.current += delta;
         onChange({
             position: self.position,
             velocity: new Vector3(velocity.x, vy.current, velocity.z)

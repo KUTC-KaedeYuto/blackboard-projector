@@ -1,34 +1,43 @@
 "use client"
 
-import MyBall from "@/components/drei/MyBall";
+import Bullet from "@/components/drei/monkey/Bullet";
 import BaseSpace, { CameraSetter } from "@/components/top/BaseSpace";
 import { Html, Grid } from "@react-three/drei";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Vector3, Color } from "three";
 import Graph from "@/components/drei/Graph";
+import Monkey from "@/components/drei/monkey/Monkey";
+import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
+
+const initialMonkeyPos = new Vector3(80, 50, 0);
 
 export default function Page() {
-    const y_ref = useRef();
+    const v_ref = useRef();
     const trail_ref = useRef();
     const [active, setActive] = useState(false);
-    const [ballInfo, setBallInfo] = useState({
-        position: new Vector3(0, 10, 0),
-        velocity: new Vector3(0, 0, 0)
+    const [bulletInfo, setBulletInfo] = useState({
+        position: new Vector3(),
+        velocity: new Vector3(12, 20, 0)
     });
-        const [cameraPos, setCameraPos] = useState({
-        x: 0,
-        y: 2.5,
-        z: 20
+    const [monkeyInfo, setMonkeyInfo] = useState({
+        position: initialMonkeyPos.clone(),
+        velocity: new Vector3()
     });
-        const [graphType, setGraphType] = useState(0);
+    const [cameraPos, setCameraPos] = useState({
+        x: monkeyInfo.position.x / 2,
+        y: monkeyInfo.position.y / 2,
+        z: monkeyInfo.position.y * 1.75
+    });
+    const [graphType, setGraphType] = useState(0);
     const [init, setInit] = useState(false);
     const [show_trail, setShowTrail] = useState(true);
     const [showGrid, setShowGrid] = useState(true);
-        const [graphData, setGraphData] = useState([]);
+    const [graphData, setGraphData] = useState([]);
+    const [hit, setHit] = useState(false);
 
-        const getGraph = (type) => {
-        switch(type){
+    const getGraph = (type) => {
+        switch (type) {
             case 0:
                 return (<Graph position={{ x: 0, y: 630 }} title="y-tグラフ" size={{ width: 250, height: 250 }} data={{
                     x: graphData.map((d) => d.t),
@@ -60,9 +69,16 @@ export default function Page() {
         }
     }
 
+    useEffect(() => {
+        if(hit) return;
+        const a = new Vector3().copy(bulletInfo.position);
+        a.sub(monkeyInfo.position);
+        setHit(a.length() <= 1);
+    }, [monkeyInfo, bulletInfo]);
+
     return (
         <BaseSpace>
-            <CameraSetter camera_pos={cameraPos} camera_lookAt={new Vector3(0, cameraPos.y, 0)} />
+            <CameraSetter camera_pos={cameraPos} camera_lookAt={new Vector3(cameraPos.x, cameraPos.y, 0)} />
             {
                 showGrid && <Grid
                     cellSize={2}
@@ -77,16 +93,16 @@ export default function Page() {
                     infiniteGrid
                 />
             }
-            <MyBall
-                pos={ballInfo.position}
-                velocity={ballInfo.velocity}
+            <Bullet
+                pos={bulletInfo.position}
+                velocity={bulletInfo.velocity}
                 radius={1}
                 color="#f00"
                 show_trail={show_trail}
                 trail_cooltime={0.2}
-                onChange={setBallInfo}
-                                renderGraph={true}
-                                updateGraph={(t, info) => {
+                onChange={setBulletInfo}
+                renderGraph={true}
+                updateGraph={(t, info) => {
                     setGraphData([...graphData, {
                         t,
                         data: info
@@ -94,6 +110,7 @@ export default function Page() {
                 }}
                 active={active}
                 init={{ init, setInit }} />
+            <Monkey pos={monkeyInfo.position} onChange={setMonkeyInfo} active={active} init={{init, setInit}} hit={hit} />
             <Html
                 calculatePosition={() => [0, 150]}
                 style={{ width: "200px", background: "#fff" }}
@@ -102,14 +119,15 @@ export default function Page() {
             >
                 <Form>
                     <Form.Group>
-                        <Form.Label>初期位置-Y</Form.Label>
-                        <Form.Range min={5} max={100} step={1} defaultValue={10} ref={y_ref} />
+                        <Form.Label>初期速度</Form.Label>
+                        <LabeledRange min={30} max={150} step={1} defaultValue={10} ref={v_ref} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>グラフタイプ</Form.Label>
                         <Form.Select onChange={(e) => {
                             setGraphType(+e.target.value);
                         }}>
+                            <option value={-1}>なし</option>
                             <option value={0}>y-t</option>
                             <option value={1}>Vy-t</option>
                         </Form.Select>
@@ -120,18 +138,20 @@ export default function Page() {
                     }} />
                 </Form>
                 <Button variant="primary" onClick={() => {
-                    let new_ballInfo = { ...ballInfo };
-                    new_ballInfo.position.y = +y_ref.current.value;
-                    new_ballInfo.velocity = new Vector3(0, 0, 0);
-                    setBallInfo(new_ballInfo);
                     setShowTrail(trail_ref.current.checked);
                     setInit(true);
-                                        setGraphData([]);
-                    setCameraPos({
-                        x: 0,
-                        y: +y_ref.current.value / 4,
-                        z: +y_ref.current.value * 2
+                    setGraphData([]);
+                    setMonkeyInfo({
+                        position: initialMonkeyPos.clone(),
+                        velocity: new Vector3()
                     });
+                    const v0 = +v_ref.current.value;
+                    const theta = Math.atan(initialMonkeyPos.y / initialMonkeyPos.x);
+                    setBulletInfo({
+                        position: new Vector3(),
+                        velocity: new Vector3(Math.cos(theta), Math.sin(theta), 0).multiplyScalar(v0)
+                    });
+                    setHit(false);
                 }}>適用</Button>
                 <Button variant="primary" onClick={(e) => {
                     setActive(!active);
@@ -140,9 +160,9 @@ export default function Page() {
                 }}>再生</Button>
             </Html>
             {
-                                getGraph(graphType)
+                getGraph(graphType)
             }
-            
+
         </BaseSpace>
     );
 }

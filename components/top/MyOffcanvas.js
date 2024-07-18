@@ -22,7 +22,7 @@ export default function MyOffcanvas() {
               <ListGroup.Item><a href="/projectile/throwup">鉛直投げ上げ</a></ListGroup.Item>
               <ListGroup.Item><a href="/projectile/horizontal">水平投射</a></ListGroup.Item>
               <ListGroup.Item><a href="/projectile/oblique">斜方投射</a></ListGroup.Item>
-              
+              <ListGroup.Item><a href="/projectile/monkeyhunting">モンキーハンティング</a></ListGroup.Item>
             </ListGroup>
           </Offcanvas.Body>
         </Offcanvas>

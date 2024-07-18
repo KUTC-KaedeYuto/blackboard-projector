@@ -53,6 +53,7 @@ function BaseSpace({children}) {
         >
           <Helper type={DirectionalLightHelper} />
         </directionalLight>
+        <directionalLight color={0xffffff} position={[-1000, 1000, 1000]} intensity={2} />
 
         <Plane args={[1000, 1000]} position={[0, 0, 0]} rotation={[-Math.PI / 2.01, 0, 0]} receiveShadow>
           <meshStandardMaterial color="#7fd14b" />

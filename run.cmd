@@ -1,3 +1,4 @@
 @echo off
-npm start
+start http://localhost:3000/
+npm run dev
 pause

@@ -1,12 +1,12 @@
 import { Color } from 'three';
-import MyBall from '../drei/MyBall';
+import MyBall from '../drei/projectile/MyBall';
 import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import { useRef, useState, createContext, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Vector3 } from 'three';
-import Graph from '../drei/Graph';
+import Graph from '../drei/projectile/Graph';
 import { ContextShowMenu } from '@/app/layout';
 
 export const graphContext = createContext(null);

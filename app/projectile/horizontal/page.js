@@ -1,7 +1,7 @@
 "use client"
 
-import MyBall from "@/components/drei/MyBall";
-import BaseSpace, { CameraSetter } from "@/components/top/BaseSpace";
+import MyBall from "@/components/drei/projectile/MyBall";
+import BaseSpace, { CameraSetter } from "@/components/drei/projectile/BaseSpace";
 import { Html, Grid } from "@react-three/drei";
 import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";

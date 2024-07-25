@@ -1,4 +1,4 @@
-import Graph from "@/components/drei/Graph";
+import Graph from "@/components/drei/projectile/Graph";
 import { Canvas } from "@react-three/fiber";
 import { Color } from "three";
 

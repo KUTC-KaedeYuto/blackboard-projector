@@ -1,24 +1,25 @@
 "use client"
 
-import Bullet from "@/components/drei/monkey/Bullet";
-import BaseSpace, { CameraSetter } from "@/components/top/BaseSpace";
+import Bullet from "@/components/drei/projectile/monkey/Bullet";
+import BaseSpace, { CameraSetter } from "@/components/drei/projectile/BaseSpace";
 import { Html, Grid } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Vector3, Color } from "three";
-import Graph from "@/components/drei/Graph";
-import Monkey from "@/components/drei/monkey/Monkey";
+import Graph from "@/components/drei/projectile/Graph";
+import Monkey from "@/components/drei/projectile/monkey/Monkey";
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 
 const initialMonkeyPos = new Vector3(80, 50, 0);
 
 export default function Page() {
+    const _theta = Math.atan(5/8);
     const v_ref = useRef();
     const trail_ref = useRef();
     const [active, setActive] = useState(false);
     const [bulletInfo, setBulletInfo] = useState({
         position: new Vector3(),
-        velocity: new Vector3(12, 20, 0)
+        velocity: new Vector3(Math.cos(_theta), Math.sin(_theta), 0).multiplyScalar(50)
     });
     const [monkeyInfo, setMonkeyInfo] = useState({
         position: initialMonkeyPos.clone(),
@@ -120,7 +121,7 @@ export default function Page() {
                 <Form>
                     <Form.Group>
                         <Form.Label>初期速度</Form.Label>
-                        <LabeledRange min={30} max={150} step={1} defaultValue={10} ref={v_ref} />
+                        <LabeledRange min={30} max={150} step={1} defaultValue={50} ref={v_ref} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>グラフタイプ</Form.Label>

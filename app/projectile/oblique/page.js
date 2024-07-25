@@ -1,14 +1,14 @@
 "use client"
 
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
-import MyBall from "@/components/drei/MyBall";
-import BaseSpace, { CameraSetter } from "@/components/top/BaseSpace";
+import MyBall from "@/components/drei/projectile/MyBall";
+import BaseSpace, { CameraSetter } from "@/components/drei/projectile/BaseSpace";
 import { Html, Grid } from "@react-three/drei";
 import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Vector3, Color } from "three";
 import { toRadians } from "@/lib/mathutil";
-import Graph from "@/components/drei/Graph";
+import Graph from "@/components/drei/projectile/Graph";
 
 export default function Page() {
     const y_ref = useRef();

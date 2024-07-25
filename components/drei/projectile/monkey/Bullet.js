@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
-import TrailObjects from '@/components/drei/TrailObjects';
+import TrailObjects from '@/components/drei/projectile/TrailObjects';
 import { Sphere } from "@react-three/drei";
 
 

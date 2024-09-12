@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Vector3, Color } from "three";
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
+import Graph from "@/components/drei/projectile/Graph";
 
 export default function Page() {
     const y_ref = useRef();

@@ -15,22 +15,22 @@ export default function Home() {
           <Container>
             <h4>力学</h4>
             <ListGrop>
-              <ListGrop.Item href="/projectile/freefall/" action >自由落下</ListGrop.Item>
-              <ListGrop.Item href="/projectile/throwup/" action >鉛直投げ上げ</ListGrop.Item>
-              <ListGrop.Item href="/projectile/horizontal/" action >水平投射</ListGrop.Item>
-              <ListGrop.Item href="/projectile/oblique/" action >斜方投射</ListGrop.Item>
+              <ListGrop.Item href="./projectile/freefall/" action >自由落下</ListGrop.Item>
+              <ListGrop.Item href="./projectile/throwup/" action >鉛直投げ上げ</ListGrop.Item>
+              <ListGrop.Item href="./projectile/horizontal/" action >水平投射</ListGrop.Item>
+              <ListGrop.Item href="./projectile/oblique/" action >斜方投射</ListGrop.Item>
             </ListGrop>
           </Container>
           <Container>
             <h4>{"力学(その他)"}</h4>
             <ListGrop>
-              <ListGrop.Item href="/projectile/monkeyhunting/" action >モンキーハンティング</ListGrop.Item>
+              <ListGrop.Item href="./projectile/monkeyhunting/" action >モンキーハンティング</ListGrop.Item>
             </ListGrop>
           </Container>
           <Container>
             <h4>運動量</h4>
             <ListGrop>
-              <ListGrop.Item href="/momentum/test" action >てすと</ListGrop.Item>
+              <ListGrop.Item href="./momentum/test" action >てすと</ListGrop.Item>
             </ListGrop>
           </Container>
         </div>

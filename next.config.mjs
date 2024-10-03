@@ -3,7 +3,7 @@ const nextConfig = {
     trailingSlash:true,
     output:'export',
     basePath: '/blackboard-projector',
-    assetPrefix: '/blackboard-projector',
+    assetPrefix: '/blackboard-projector/',
     distDir: 'docs'
 };
 

@@ -8,7 +8,7 @@ import { Button, Form } from "react-bootstrap";
 import { Vector3 } from "three";
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 import Graph from "@/components/drei/projectile/Graph";
-
+import { ballColor, ballRadius, trailCooltime } from "../ballConfig";
 
 export default function Page() {
     const y_ref = useRef();
@@ -75,10 +75,10 @@ export default function Page() {
             <MyBall
                 pos={ballInfo.position}
                 velocity={ballInfo.velocity}
-                radius={1}
-                color="#f00"
+                radius={ballRadius}
+                color={ballColor}
                 show_trail={show_trail}
-                trail_cooltime={0.2}
+                trail_cooltime={trailCooltime}
                 onChange={setBallInfo}
                 active={active}
                 init={{ init, setInit }}

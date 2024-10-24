@@ -67,7 +67,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, show_tra
     return (
         <>
         <Sphere position={[pos.x, pos.y, pos.z]} castShadow ref={ref} args={[radius, 32, 32]}>
-            <meshPhysicalMaterial color={color} metalness={0.5} roughness={0} />
+            <meshPhysicalMaterial color={color} metalness={0} roughness={0.2} />
         </Sphere>
         <TrailObjects radius={radius} color={color} pos={trails} />
         </>

@@ -17,12 +17,12 @@ export default function MyOffcanvas() {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <ListGroup>
-              <ListGroup.Item href="../../app/" action>Home</ListGroup.Item>
-              <ListGroup.Item href="../../app/projectile/freefall" action>自由落下</ListGroup.Item>
-              <ListGroup.Item href="../../app/projectile/throwup" action>鉛直投げ上げ</ListGroup.Item>
-              <ListGroup.Item href="../../app/projectile/horizontal" action>水平投射</ListGroup.Item>
-              <ListGroup.Item href="../../app/projectile/oblique" action>斜方投射</ListGroup.Item>
-              <ListGroup.Item href="../../app/projectile/monkeyhunting" action>モンキーハンティング</ListGroup.Item>
+              <ListGroup.Item href="/" action>Home</ListGroup.Item>
+              <ListGroup.Item href="/projectile/freefall" action>自由落下</ListGroup.Item>
+              <ListGroup.Item href="/projectile/throwup" action>鉛直投げ上げ</ListGroup.Item>
+              <ListGroup.Item href="/projectile/horizontal" action>水平投射</ListGroup.Item>
+              <ListGroup.Item href="/projectile/oblique" action>斜方投射</ListGroup.Item>
+              <ListGroup.Item href="/projectile/monkeyhunting" action>モンキーハンティング</ListGroup.Item>
             </ListGroup>
           </Offcanvas.Body>
         </Offcanvas>

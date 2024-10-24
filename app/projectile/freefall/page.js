@@ -24,7 +24,7 @@ export default function Page() {
         const [graphType, setGraphType] = useState(0);
     const [init, setInit] = useState(false);
     const [show_trail, setShowTrail] = useState(true);
-    const [showGrid, setShowGrid] = useState(true);
+    const [showGrid, setShowGrid] = useState(false);
         const [graphData, setGraphData] = useState([]);
 
         const getGraph = (type) => {
@@ -61,22 +61,8 @@ export default function Page() {
     }
 
     return (
-        <BaseSpace>
+        <BaseSpace showGrid={showGrid}>
             <CameraSetter camera_pos={cameraPos} camera_lookAt={new Vector3(0, cameraPos.y, 0)} />
-            {
-                showGrid && <Grid
-                    cellSize={2}
-                    cellColor={new Color(0xfffffff)}
-                    cellThickness={1}
-                    rotation={[Math.PI / 2, 0, 0]}
-                    position={[0, 0, 0]}
-                    sectionSize={10}
-                    sectionColor={new Color(0xfffffff)}
-                    sectionThickness={1.5}
-                    fadeDistance={10000}
-                    infiniteGrid
-                />
-            }
             <MyBall
                 pos={ballInfo.position}
                 velocity={ballInfo.velocity}
@@ -115,7 +101,7 @@ export default function Page() {
                         </Form.Select>
                     </Form.Group>
                     <Form.Check ref={trail_ref} type="switch" label="軌跡を表示" defaultChecked />
-                    <Form.Check type="switch" label="XYグリッドを表示" defaultChecked onChange={(e) => {
+                    <Form.Check type="switch" label="XYグリッドを表示" onChange={(e) => {
                         setShowGrid(e.target.checked);
                     }} />
                 </Form>

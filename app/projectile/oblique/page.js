@@ -3,10 +3,10 @@
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 import MyBall from "@/components/drei/projectile/MyBall";
 import BaseSpace, { CameraSetter } from "@/components/drei/projectile/BaseSpace";
-import { Html, Grid } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Vector3, Color } from "three";
+import { Vector3 } from "three";
 import { toRadians } from "@/lib/mathutil";
 import Graph from "@/components/drei/projectile/Graph";
 
@@ -28,7 +28,7 @@ export default function Page() {
     const [graphType, setGraphType] = useState(0);
     const [show_trail, setShowTrail] = useState(true);
     const [init, setInit] = useState(false);
-    const [showGrid, setShowGrid] = useState(true);
+    const [showGrid, setShowGrid] = useState(false);
     const [graphData, setGraphData] = useState([]);
     const [graphArg, setGraphArg] = useState({});
 
@@ -71,22 +71,8 @@ export default function Page() {
     }
 
     return (
-        <BaseSpace>
+        <BaseSpace showGrid={showGrid}>
             <CameraSetter camera_pos={cameraPos} camera_lookAt={new Vector3(cameraPos.x, cameraPos.y, 0)} />
-            {
-                showGrid && <Grid
-                    cellSize={2}
-                    cellColor={new Color(0xfffffff)}
-                    cellThickness={1}
-                    rotation={[Math.PI / 2, 0, 0]}
-                    position={[0, 0, 0]}
-                    sectionSize={10}
-                    sectionColor={new Color(0xfffffff)}
-                    sectionThickness={1.5}
-                    fadeDistance={10000}
-                    infiniteGrid
-                />
-            }
 
             <MyBall
                 pos={ballInfo.position}
@@ -137,7 +123,7 @@ export default function Page() {
                         </Form.Select>
                     </Form.Group>
                     <Form.Check ref={trail_ref} type="switch" label="軌跡を表示" defaultChecked />
-                    <Form.Check type="switch" label="XYグリッドを表示" defaultChecked onChange={(e) => {
+                    <Form.Check type="switch" label="XYグリッドを表示" onChange={(e) => {
                         setShowGrid(e.target.checked);
                     }} />
                 </Form>

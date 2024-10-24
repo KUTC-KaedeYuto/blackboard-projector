@@ -9,6 +9,7 @@ import { Vector3, Color } from "three";
 import Graph from "@/components/drei/projectile/Graph";
 import Monkey from "@/components/drei/projectile/monkey/Monkey";
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
+import { ballColor, ballRadius, trailCooltime } from "../../ballConfig";
 
 const initialMonkeyPos = new Vector3(80, 50, 0);
 
@@ -97,10 +98,10 @@ export default function Page() {
             <Bullet
                 pos={bulletInfo.position}
                 velocity={bulletInfo.velocity}
-                radius={1}
-                color="#f00"
+                radius={ballRadius}
+                color={ballColor}
                 show_trail={show_trail}
-                trail_cooltime={0.2}
+                trail_cooltime={trailCooltime}
                 onChange={setBulletInfo}
                 renderGraph={true}
                 updateGraph={(t, info) => {

@@ -67,8 +67,7 @@ function InnerGraph({size, title, data, drawLine}){
         <div
             style={{
                 width: "100%",
-                height: "100%",
-                color: "#fff"
+                height: "100%"
             }}
         >
             {title}
@@ -81,19 +80,19 @@ function InnerGraph({size, title, data, drawLine}){
     );
 }
 
-export default function Graph({position, size, title, data, drawLine=false}){
+export default function Graph({size, title, data, drawLine=false}){
     return (
-        <Html
-            calculatePosition={() => [position.x, position.y]}
+        <div
             style={{
                 width: `${size.width}px`,
                 height: `max-content`,
                 textAlign:"center",
-                pointerEvents: "none"
+                pointerEvents: "none",
+                display: "inline-block"
             }}
         >
             <InnerGraph size={size} title={title} data={data} drawLine={drawLine}></InnerGraph>
-        </Html>
+        </div>
     );
 }
 

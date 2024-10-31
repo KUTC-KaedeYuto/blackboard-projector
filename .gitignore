@@ -39,4 +39,5 @@ next-env.d.ts
 
 ./run.cmd
 
-/docs/*
+# docs
+docs/

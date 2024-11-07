@@ -1,9 +1,6 @@
 import { Color, DirectionalLightHelper, Vector3 } from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Helper, Html, PerspectiveCamera, Grid } from '@react-three/drei';
-import { useContext } from 'react';
-import { Button } from 'react-bootstrap';
-import { ContextShowMenu } from '@/app/layout';
+import { Helper, PerspectiveCamera, Grid } from '@react-three/drei';
 import { Plane } from '@react-three/drei';
 import { OrbitControls } from '@react-three/drei';
 
@@ -18,7 +15,6 @@ export function CameraSetter({ camera_pos = new Vector3(0, 10, 40), camera_lookA
 
 function BaseSpace({ showGrid, children }) {
 
-  const { setShowMenu } = useContext(ContextShowMenu);
 
   return (
     <div className="App text-center" style={{ height: "100%" }}>
@@ -76,17 +72,6 @@ function BaseSpace({ showGrid, children }) {
         }
 
         {children}
-        <Html
-          calculatePosition={() => [0, 0]}
-          style={{
-            width: "50vw",
-            textAlign: "left",
-          }}
-          zIndexRange={[999, 0]}
-        >
-          <Button variant='outline-secondary' className='ml-2' onClick={() => { setShowMenu(true) }}>メニューを表示</Button>
-
-        </Html>
       </Canvas>
     </div>
   );

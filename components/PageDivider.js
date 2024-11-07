@@ -15,6 +15,8 @@ export default function PageDivider({top, bottom}){
     const handleMouseDown = (e) => {
         mouseDown.current = true;
         setShowSpacer(true);
+        _height.current = e.clientY - 10;
+        setSpacerHeight(_height.current);
         pmouse.current = {
             x: e.clientX,
             y: e.clientY
@@ -22,7 +24,7 @@ export default function PageDivider({top, bottom}){
     };
     const handleMouseMove = (e) => {
         if (mouseDown.current) {
-            _height.current = _height.current + (e.clientY - pmouse.current.y);
+            _height.current = e.clientY - 10;
             setSpacerHeight(_height.current);
             if(timeoutRef.current !== null) {
                 clearTimeout(timeoutRef.current);
@@ -70,7 +72,7 @@ export default function PageDivider({top, bottom}){
                     color: "#fff",
                     textAlign: "center",
                     userSelect: "none",
-                    opacity: "0.2"
+                    cursor: "ns-resize"
                 }}>・・・</div>
             </div>
             <div>
@@ -85,6 +87,7 @@ export default function PageDivider({top, bottom}){
                     pointerEvents: "none",
                     position: "absolute",
                     display: showSpacer ? "block" : "none",
+                    opacity: "0.8",
                     top: `${spacerHeight}px`,
                     zIndex: 10000
                 }}>・・・</div>

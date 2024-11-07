@@ -1,6 +1,4 @@
-import { Html } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-
 
 function InnerGraph({size, title, data, drawLine}){
     const canvas_ref = useRef();
@@ -67,7 +65,8 @@ function InnerGraph({size, title, data, drawLine}){
         <div
             style={{
                 width: "100%",
-                height: "100%"
+                height: "100%",
+                background: "#fff"
             }}
         >
             {title}

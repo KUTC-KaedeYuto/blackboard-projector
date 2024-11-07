@@ -13,7 +13,7 @@ export default function MyOffcanvas() {
     <>
         <Offcanvas show={showMenu} onHide={handleClose}>
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+            <Offcanvas.Title>メニュー</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <ListGroup>

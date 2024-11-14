@@ -13,16 +13,16 @@ export default function MyOffcanvas() {
     <>
         <Offcanvas show={showMenu} onHide={handleClose}>
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+            <Offcanvas.Title>メニュー</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <ListGroup>
-              <ListGroup.Item><a href="/">Home</a></ListGroup.Item>
-              <ListGroup.Item><a href="/projectile/freefall">自由落下</a></ListGroup.Item>
-              <ListGroup.Item><a href="/projectile/throwup">鉛直投げ上げ</a></ListGroup.Item>
-              <ListGroup.Item><a href="/projectile/horizontal">水平投射</a></ListGroup.Item>
-              <ListGroup.Item><a href="/projectile/oblique">斜方投射</a></ListGroup.Item>
-              <ListGroup.Item><a href="/projectile/monkeyhunting">モンキーハンティング</a></ListGroup.Item>
+              <ListGroup.Item href="./" action>Home</ListGroup.Item>
+              <ListGroup.Item href="./projectile/freefall" action>自由落下</ListGroup.Item>
+              <ListGroup.Item href="./projectile/throwup" action>鉛直投げ上げ</ListGroup.Item>
+              <ListGroup.Item href="./projectile/horizontal" action>水平投射</ListGroup.Item>
+              <ListGroup.Item href="./projectile/oblique" action>斜方投射</ListGroup.Item>
+              <ListGroup.Item href="./projectile/monkeyhunting" action>モンキーハンティング</ListGroup.Item>
             </ListGroup>
           </Offcanvas.Body>
         </Offcanvas>

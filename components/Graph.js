@@ -1,6 +1,4 @@
-import { Html } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-
 
 function InnerGraph({size, title, data, drawLine}){
     const canvas_ref = useRef();
@@ -68,7 +66,7 @@ function InnerGraph({size, title, data, drawLine}){
             style={{
                 width: "100%",
                 height: "100%",
-                color: "#fff"
+                background: "#fff"
             }}
         >
             {title}
@@ -81,19 +79,19 @@ function InnerGraph({size, title, data, drawLine}){
     );
 }
 
-export default function Graph({position, size, title, data, drawLine=false}){
+export default function Graph({size, title, data, drawLine=false}){
     return (
-        <Html
-            calculatePosition={() => [position.x, position.y]}
+        <div
             style={{
                 width: `${size.width}px`,
                 height: `max-content`,
                 textAlign:"center",
-                pointerEvents: "none"
+                pointerEvents: "none",
+                display: "inline-block"
             }}
         >
             <InnerGraph size={size} title={title} data={data} drawLine={drawLine}></InnerGraph>
-        </Html>
+        </div>
     );
 }
 

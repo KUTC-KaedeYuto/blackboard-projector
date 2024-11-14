@@ -43,7 +43,7 @@ export default function MyBall({pos, velocity, radius, color, onChange, show_tra
         
 
         if(self.position.y < radius) {
-            vy.current = -vy.current * e;
+            // vy.current = -vy.current * e;
             self.position.y = radius;
             // if(vy.current < radius * 0.5) setUpdate(false);
             

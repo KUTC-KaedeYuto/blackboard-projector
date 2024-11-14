@@ -9,6 +9,7 @@ import FloatingWindow from "@/components/FloatingWindow";
 import { ShowUIContext } from "../layout";
 import ApplyButton from "../../../components/top/ApplyButton";
 import PlayButton from "../../../components/top/PlayButton";
+import MathjaxWrapper from "@/components/mathjaxWrapper";
 
 export default function Top() {
     const y_ref = useRef();
@@ -68,7 +69,7 @@ export default function Top() {
 
     return (
         <div>
-            <FloatingWindow initialPos={{ x: 10, y: 40 }}>
+            <FloatingWindow initialPos={{ x: 10, y: 70 }}>
 
                 <div
                     style={{
@@ -131,23 +132,29 @@ export default function Top() {
                             vy: v_0 * Math.sin(theta)
                         });
                     }} />
-                    <PlayButton onClick={(e) => {
+                    <PlayButton onClick={() => {
                         setActive(!active);
-                        if (e.target.innerHTML === "再生") e.target.innerHTML = "一時停止";
-                        else e.target.innerHTML = "再生";
                     }} />
                 </div>
 
             </FloatingWindow>
             {
-                showGraph && <FloatingWindow initialPos={{ x: 250, y: 40 }} >
+                showGraph && <FloatingWindow initialPos={{ x: 250, y: 70 }} >
                     {
 
                         getGraph(graphType)
                     }
                 </FloatingWindow>
             }
-
+            <FloatingWindow initialPos={{ x: 520, y: 70 }} resize>
+                <MathjaxWrapper 
+                    args={[`a = g = -9.8`,
+                    `v_{0y} &= v_{0}\\sin\\theta`,
+                    `v_{y} &= \\int_{0}^{t} a dt + v_{0y} \\\\ &= -9.8t + v_{0}\\sin\\theta`,
+                    `y &= \\int_{0}^{t} v_{y} dt + h \\\\ &= -4.9t^{2} + v_{0}t\\sin\\theta + h`,
+                    ``]}
+                />
+            </FloatingWindow>
         </div>
     );
 }

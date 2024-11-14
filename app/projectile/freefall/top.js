@@ -8,6 +8,7 @@ import FloatingWindow from "@/components/FloatingWindow";
 import { ShowUIContext } from "../layout";
 import ApplyButton from "../../../components/top/ApplyButton";
 import PlayButton from "../../../components/top/PlayButton";
+import MathjaxWrapper from "@/components/mathjaxWrapper";
 
 export default function Top() {
     const y_ref = useRef();
@@ -59,7 +60,7 @@ export default function Top() {
 
     return (
         <div>
-            <FloatingWindow initialPos={{ x: 10, y: 40 }} >
+            <FloatingWindow initialPos={{ x: 10, y: 70 }} >
                 <div
                     style={{ width: "200px", background: "#fff", display: "inline-block" }}
                     className="p-2"
@@ -106,12 +107,21 @@ export default function Top() {
                 </div>
             </FloatingWindow>
             {
-                showGraph && <FloatingWindow initialPos={{ x: 220, y: 40 }} >
+                showGraph && <FloatingWindow initialPos={{ x: 220, y: 70 }} >
                     {
                         getGraph(graphType)
                     }
                 </FloatingWindow>
             }
+            <FloatingWindow initialPos={{ x: 520, y: 70 }} resize>
+                <MathjaxWrapper 
+                    args={[`a = g = -9.8`,
+                    `v_{0y} = 0`,
+                    `v_{y} &= \\int_{0}^{t} a dt + v_{0y} \\\\ &= -9.8t`,
+                    `y &= \\int_{0}^{t} v_{y} dt + h \\\\ &= -4.9t^{2} + h`,
+                    ``]}
+                />
+            </FloatingWindow>
         </div>
     );
 }

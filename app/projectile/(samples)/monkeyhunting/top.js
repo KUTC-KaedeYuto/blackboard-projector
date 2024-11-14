@@ -6,6 +6,7 @@ import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 import { DataContext } from "./page";
 import FloatingWindow from "@/components/FloatingWindow";
 import { ShowUIContext } from "../../layout";
+import MathjaxWrapper from "@/components/mathjaxWrapper";
 
 export default function Top() {
     const _theta = Math.atan(5/8);
@@ -68,7 +69,7 @@ export default function Top() {
 
     return (
         <div>
-          <FloatingWindow initialPos={{ x: 10, y: 50 }}>
+          <FloatingWindow initialPos={{ x: 10, y: 70 }}>
               <div
                   style={{
                     width: "200px",
@@ -121,12 +122,21 @@ export default function Top() {
               </div>
           </FloatingWindow>
           {
-                showGraph && <FloatingWindow initialPos={{ x: 220, y: 50 }} >
+                showGraph && <FloatingWindow initialPos={{ x: 220, y: 70 }} >
                     {
                         getGraph(graphType)
                     }
                 </FloatingWindow>
             }
+            <FloatingWindow initialPos={{ x: 520, y: 70 }} resize>
+                <MathjaxWrapper 
+                    args={[`a = g = -9.8`,
+                    `v_{0y} &= v_{0}`,
+                    `v_{y} &= \\int_{0}^{t} a dt + v_{0y} \\\\ &= -9.8t + v_{0}`,
+                    `y &= \\int_{0}^{t} v_{y} dt + h \\\\ &= -4.9t^{2} + v_{0}t + h`,
+                    ``]}
+                />
+            </FloatingWindow>
         </div>
     );
 }

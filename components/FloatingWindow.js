@@ -120,7 +120,9 @@ export default function FloatingWindow({ children, initialPos, size, resize = fa
                 }}>
                     <div ref={childrenRef} style={{
                         width: "max-content",
-                        height: "max-content"
+                        height: "max-content",
+                        margin: 0,
+                        padding: 0
                     }}>
                         {children}
                     </div>

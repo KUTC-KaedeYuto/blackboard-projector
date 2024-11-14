@@ -6,6 +6,8 @@ import Graph from "@/components/Graph";
 import { DataContext } from "./page";
 import FloatingWindow from "@/components/FloatingWindow";
 import { ShowUIContext } from "../layout";
+import ApplyButton from "../../../components/top/ApplyButton";
+import PlayButton from "../../../components/top/PlayButton";
 
 export default function Top() {
 
@@ -87,7 +89,7 @@ export default function Top() {
                             setShowGrid(e.target.checked);
                         }} />
                     </Form>
-                    <Button variant="primary" onClick={() => {
+                    <ApplyButton onClick={() => {
                         const new_pos = new Vector3(0, 0, 0);
                         const new_vel = new Vector3(0, 0, 0);
                         new_pos.y = +y_ref.current.value;
@@ -104,12 +106,10 @@ export default function Top() {
                             y: +y_ref.current.value / 4,
                             z: +y_ref.current.value * 2
                         });
-                    }}>適用</Button>
-                    <Button variant="primary" onClick={(e) => {
+                    }} />
+                    <PlayButton onClick={() => {
                         setActive(!active);
-                        if (e.target.innerHTML === "再生") e.target.innerHTML = "一時停止";
-                        else e.target.innerHTML = "再生";
-                    }}>再生</Button>
+                    }} />
                 </div>
             </FloatingWindow>
             {

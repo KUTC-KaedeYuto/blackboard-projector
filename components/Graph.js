@@ -84,7 +84,7 @@ export default function Graph({size, title, data, drawLine=false}){
         <div
             style={{
                 width: `${size.width}px`,
-                height: `max-content`,
+                height: `calc(${size.height}px + 1em)`,
                 textAlign:"center",
                 pointerEvents: "none",
                 display: "inline-block"

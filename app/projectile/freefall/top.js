@@ -6,6 +6,8 @@ import { Button, Form } from "react-bootstrap";
 import { Vector3 } from "three";
 import FloatingWindow from "@/components/FloatingWindow";
 import { ShowUIContext } from "../layout";
+import ApplyButton from "../../../components/top/ApplyButton";
+import PlayButton from "../../../components/top/PlayButton";
 
 export default function Top() {
     const y_ref = useRef();
@@ -83,7 +85,7 @@ export default function Top() {
                             setShowGrid(e.target.checked);
                         }} />
                     </Form>
-                    <Button variant="primary" onClick={() => {
+                    <ApplyButton onClick={() => {
                         let new_ballInfo = {
                             position: new Vector3(0, +y_ref.current.value, 0),
                             velocity: new Vector3(0, 0, 0)
@@ -97,12 +99,10 @@ export default function Top() {
                             y: +y_ref.current.value / 4,
                             z: +y_ref.current.value * 2
                         });
-                    }}>適用</Button>
-                    <Button variant="primary" onClick={(e) => {
+                    }} />
+                    <PlayButton onClick={() => {
                         setActive(!active);
-                        if (e.target.innerHTML === "再生") e.target.innerHTML = "一時停止";
-                        else e.target.innerHTML = "再生";
-                    }}>再生</Button>
+                    }} />
                 </div>
             </FloatingWindow>
             {

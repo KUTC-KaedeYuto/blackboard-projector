@@ -71,7 +71,6 @@ export default function FloatingWindow({ children, initialPos, size }) {
         window.addEventListener("mouseup", handleMouseUp);
         if (!(size?.width && size?.height)) {
             const bound = parent_ref.current.getBoundingClientRect();
-            bound.height -= 30;
             setWindowSize(bound);
         }
         return () => {

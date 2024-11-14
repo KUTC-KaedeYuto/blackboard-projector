@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function FloatingWindow({ children, initialPos, size }) {
+export default function FloatingWindow({ children, initialPos, size, resize = false }) {
     const pmouse = useRef({ x: 0, y: 0 });
     const mouseDown = useRef(false);
     const [windowPos, setWindowPos] = useState(initialPos);
@@ -8,7 +8,7 @@ export default function FloatingWindow({ children, initialPos, size }) {
     const timeoutRef = useRef(null);
     const [showDummy, setShowDummy] = useState(false);
     const [dummyPos, setDummyPos] = useState({ x: 0, y: 0 });
-    const parent_ref = useRef();
+    const childrenRef = useRef();
     const [windowSize, setWindowSize] = useState({
         width: size?.width,
         height: size?.height
@@ -70,8 +70,16 @@ export default function FloatingWindow({ children, initialPos, size }) {
         window.addEventListener("mousemove", a);
         window.addEventListener("mouseup", handleMouseUp);
         if (!(size?.width && size?.height)) {
-            const bound = parent_ref.current.getBoundingClientRect();
+            const bound = childrenRef.current.getBoundingClientRect();
             setWindowSize(bound);
+        }
+        if (resize) {
+            const observer = new ResizeObserver(() => {
+                const bound = childrenRef.current.getBoundingClientRect();
+                setWindowSize(bound);
+                console.log("resized");
+            });
+            observer.observe(childrenRef.current);
         }
         return () => {
             window.removeEventListener("mousemove", a);
@@ -82,6 +90,7 @@ export default function FloatingWindow({ children, initialPos, size }) {
     useEffect(() => {
         handleMouseMove(mouseMoveTrigger);
     }, [mouseMoveTrigger]);
+
 
     return (
         <>
@@ -94,7 +103,6 @@ export default function FloatingWindow({ children, initialPos, size }) {
                 overflowY: "hidden",
                 zIndex: 100
             }}
-                ref={parent_ref}
             >
                 <div
                     style={{
@@ -110,7 +118,12 @@ export default function FloatingWindow({ children, initialPos, size }) {
                     overflowX: "hidden",
                     overflowY: "hidden"
                 }}>
-                    {children}
+                    <div ref={childrenRef} style={{
+                        width: "max-content",
+                        height: "max-content"
+                    }}>
+                        {children}
+                    </div>
                 </div>
             </div>
             <div style={{

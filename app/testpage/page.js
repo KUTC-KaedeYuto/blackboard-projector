@@ -2,6 +2,7 @@
 import { Button } from "react-bootstrap";
 import PageDivider from "../../components/PageDivider";
 import FloatingWindow from "../../components/FloatingWindow";
+import { useState } from "react";
 
 export default function Page() {
     return (
@@ -21,6 +22,19 @@ function Top(){
                 height: 200
             }} >
                 FloatingWindowだよ
+            </FloatingWindow>
+            <FloatingWindow initialPos={{
+                x: 300,
+                y: 100
+            }} resize={true}>
+                <div style={{
+                    width: "max-content"
+                }} id="test">
+                    
+                </div>
+                <Button onClick={() => {
+                    document.querySelector("#test").innerText += "a";
+                }}>aa</Button>
             </FloatingWindow>
         </>
     );

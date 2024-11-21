@@ -1,41 +1,70 @@
 'use client'
-import { Button } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import PageDivider from "../../components/PageDivider";
 import FloatingWindow from "../../components/FloatingWindow";
-import { useState } from "react";
+import { createContext, useState } from "react";
+import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 
 export default function Page() {
+
     return (
-        <PageDivider top={<Top />} bottom={<Button>click me</Button>} ></PageDivider>
+        <PageDivider top={<Top />} bottom={<Bottom />} ></PageDivider>
     );
 }
 
-function Top(){
+function Top() {
+    const [fontSize, setFontSize] = useState(12);
+    const [color, setColor] = useState("#000000");
+
     return (
         <>
-            topだよー
             <FloatingWindow initialPos={{
                 x: 10,
                 y: 10
             }} size={{
                 width: 200,
-                height: 200
+                height: 200,
             }} >
-                FloatingWindowだよ
+                <div style={{ color: "#fff", width: "100%", height: "100%", fontSize: `${fontSize}px` }}>
+                    あ
+                </div>
+
             </FloatingWindow>
             <FloatingWindow initialPos={{
                 x: 300,
                 y: 100
-            }} resize={true}>
-                <div style={{
-                    width: "max-content"
-                }} id="test">
-                    
+            }} size={{
+                width: 200,
+                height: 200,
+            }} >
+                <div style={{ color, width: "100%", height: "100%", fontSize: `${fontSize}px`  }}>
+                    あ
                 </div>
-                <Button onClick={() => {
-                    document.querySelector("#test").innerText += "a";
-                }}>aa</Button>
             </FloatingWindow>
+            <Form>
+                <Form.Label>文字サイズ</Form.Label>
+                <LabeledRange min={5} max={128} step={1} defaultValue={12} onChange={(e) => {
+                    console.log(e);
+                    setFontSize(+e.target.value);
+                }} />
+                <Form.Control type="color" onChange={(e) => {
+                    setColor(e.target.value);
+                }} />
+            </Form>
         </>
+    );
+}
+
+function Bottom() {
+    return (
+        <div
+            style={{
+                background: "#000",
+                width: "100%",
+                height: "100%"
+            }}
+        >
+
+        </div>
     );
 }

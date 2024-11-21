@@ -12,7 +12,7 @@ function _LabeledRange({min, max, step, defaultValue, onChange=() => {}}, ref){
             <Form.Range ref={ref} min={min} max={max} step={step} defaultValue={defaultValue}
                     onChange={(e) => {
                         setVal(+e.target.value);
-                        onChange();
+                        onChange(e);
                     }}
                 />
             <div style={{

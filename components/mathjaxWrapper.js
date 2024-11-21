@@ -38,7 +38,7 @@ function SelectEquation({ equation }) {
 
   return (
     <MathJax 
-      style={{ color: color }}
+      style={{ color: color, fontSize:"0.9em" }}
       onMouseEnter={handleMouseEnter} 
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}

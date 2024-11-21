@@ -14,8 +14,8 @@ export default function Bottom() {
     const [monkeyInfo, setMonkeyInfo] = data.monkeyInfo;
     const cameraPos = data.cameraPos[0];
     const [init, setInit] = data.init;
-    const showTrail = data.showTrail;
-    const showGrid = data.showGrid;
+    const showTrail = data.showTrail[0];
+    const showGrid = data.showGrid[0];
     const [graphData, setGraphData] = data.graphData;
     const [hit, setHit] = data.hit;
 
@@ -27,7 +27,7 @@ export default function Bottom() {
                 velocity={bulletInfo.velocity}
                 radius={ballRadius}
                 color={ballColor}
-                showTrail={showTrail}
+                show_trail={showTrail}
                 trail_cooltime={trailCooltime}
                 onChange={setBulletInfo}
                 renderGraph={true}

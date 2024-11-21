@@ -1,12 +1,14 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Vector3 } from "three";
 import Graph from "@/components/Graph";
 import LabeledRange from "@/components/bootstrap_wrapper/LabeledRange";
 import { DataContext } from "./page";
 import FloatingWindow from "@/components/FloatingWindow";
 import { ShowUIContext } from "../../layout";
+import PlayButton from "@/components/top/PlayButton";
 import MathjaxWrapper from "@/components/mathjaxWrapper";
+import ApplyButton from "@/components/top/ApplyButton";
 
 export default function Top() {
     const _theta = Math.atan(5/8);
@@ -98,7 +100,7 @@ export default function Top() {
                         setShowGrid(e.target.checked);
                     }} />
                 </Form>
-                <Button variant="primary" onClick={() => {
+                <ApplyButton onClick={() => {
                     setShowTrail(trail_ref.current.checked);
                     setInit(true);
                     setGraphData([]);
@@ -113,12 +115,10 @@ export default function Top() {
                         velocity: new Vector3(Math.cos(theta), Math.sin(theta), 0).multiplyScalar(v0)
                     });
                     setHit(false);
-                }}>適用</Button>
-                <Button variant="primary" onClick={(e) => {
-                    setActive(!active);
-                    if (e.target.innerHTML === "再生") e.target.innerHTML = "一時停止";
-                    else e.target.innerHTML = "再生";
-                }}>再生</Button>
+                }}/>
+                <PlayButton onClick={() => {
+                        setActive(!active);
+                    }} />
               </div>
           </FloatingWindow>
           {
@@ -131,9 +131,10 @@ export default function Top() {
             <FloatingWindow initialPos={{ x: 520, y: 70 }} resize>
                 <MathjaxWrapper 
                     args={[`a = g = -9.8`,
-                    `v_{0y} &= v_{0}`,
-                    `v_{y} &= \\int_{0}^{t} a dt + v_{0y} \\\\ &= -9.8t + v_{0}`,
-                    `y &= \\int_{0}^{t} v_{y} dt + h \\\\ &= -4.9t^{2} + v_{0}t + h`,
+                            `\\theta &= \\tan^{-1}\\frac{h}{R}`,
+                            `v_{0y} &= v_{0}\\sin\\theta`,
+                            `v_{y} &= \\int_{0}^{t} a dt + v_{0y} \\\\ &= -9.8t + v_{0}\\sin\\theta`,
+                            `y &= \\int_{0}^{t} v_{y} dt \\\\ &= -4.9t^{2} + v_{0}t\\sin\\theta`,
                     ``]}
                 />
             </FloatingWindow>
